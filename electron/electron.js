@@ -3,7 +3,6 @@
  */
 const {app, BrowserWindow, Menu} = require('electron')
 const {client} = require('electron-connect');
-import * as path from 'path';
 const appName = app.getName();
 
 const debugMode = false;
