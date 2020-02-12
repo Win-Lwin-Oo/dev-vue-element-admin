@@ -1,0 +1,216 @@
+// tableOption.proto
+
+syntax = "proto3";
+package tableOption;
+
+import "table.proto";
+
+//游戏桌台配置信息
+message TableOptionInfo{
+    //桌台ID
+    int32 tableId = 0;
+    //桌台名字
+    string name = 1;
+	//状态
+    int32 actived = 2;
+    //游戏类型
+    GameType type = 3;
+    //场次ID
+	int32 countDown = 4;
+    //桌台加密ID
+	string encryptId = 5;
+	//桌台内部IP
+    string innerIp = 6;
+    
+    //桌台默认筹码
+    repeated int32 chips = 7;
+    //桌台最大限红
+    int32 maxAll = 8;
+    //分配给桌台的限红ID
+    int32 limitId = 9;
+    //视频信息
+	repeated VideoInfo videoInfo = 10;    
+    // 电投视频
+    repeated VideoInfo videoPhoneInfo = 11;
+    // h5视频
+    repeated VideoInfo videoH5Info = 12;
+    // 用语排序的桌台下标
+    int32 tableIndex = 13;
+    //桌台简称
+    string nickName = 14;
+    // 1 普通台 2 虚拟台
+    int32 tableType = 15;
+    // 录入端视频
+    repeated VideoInfo videoControlInfo = 16;
+    // 桌台同步标识值
+    string tableSyncId = 17;
+    // 桌台特征ID
+    string featureId = 18;
+    // 桌台新玩法开关 1 普通玩法 2 新玩法
+    int32 playTypeSwitch = 19;
+}
+
+//******************************************* 消息体 *******************************************
+
+//所有桌台信息请求
+message AllTableRequest {
+	//用户账号
+	string account = 0;
+}
+message AllTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//桌台信息列表
+	repeated TableOptionInfo info = 1;
+}
+
+//所有桌台信息请求
+message AllTableDetailRequest {
+	//用户账号
+	string account = 0;
+}
+//所有桌台信息请求
+message AllTableDetailReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//游戏信息列表
+	repeated TableInfo info = 1;
+}
+
+//创建桌台信息请求
+message CreateTableRequest {
+	//用户账号
+    string account = 0;
+    //用户名称
+    string name = 1;
+    //桌台信息
+    TableOptionInfo info = 2;
+}
+message CreateTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        errorTableIndex = 2; // 重复排序下标
+        errorInnerIp = 3; // 重复ip
+        errSyncId = 4; // 重复同步ID
+    }
+    //结果
+    Code result = 0;
+    //桌台信息
+    TableOptionInfo info = 1;
+    // 重复的tableName 
+    string errTableName = 2;
+}
+
+//创建桌台信息请求
+message UpdateTableRequest {
+	//用户账号
+    string account = 0;
+    //用户名称
+    string name = 1;
+    //桌台信息
+    TableOptionInfo info = 2;
+}
+message UpdateTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        errorTableIndex = 2; // 重复排序下标
+        errorInnerIp = 3; // 重复ip
+        errSyncId = 4; // 重复同步ID
+    }
+    //结果
+    Code result = 0;
+    // 重复的tableName 
+    string errTableName = 1;
+}
+
+//允许桌台当局退格请求
+message AllowTableBackRequest {
+	//用户账号
+	string account = 0;
+    // 桌台ID
+    int32 tableId = 1;
+    // 用户名
+    string name = 2;
+}
+
+message AllowTableBackReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        NoGame = 2;     //桌台无游戏
+        NoTable = 3;    //无桌台
+        errThrow = 10;  // 抛异常
+    }
+    //结果
+    Code result = 0;
+}
+
+//桌台同步请求
+message AsyncTableRequest {
+	//用户账号
+	string account = 0;
+    // 桌台同步标识值
+    string tableSyncId = 1;
+    //桌台ID
+    int32 tableId = 2;
+}
+
+message AsyncTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        NoSyncId = 1;     //tableSyncId不存在
+        ErrSyncId = 2;     //tableSyncId格式不正确
+        NoTable = 3;    //未找到指定桌台
+        SameTable = 4; // 相同同步桌台
+        ErrParam = 5; // 参数错误
+        ErrThrow = 10;  // 网络异常
+    }
+    //结果
+    Code result = 0;
+    // 桌台消息
+    TableOptionInfo info = 1;
+    // 重复的tableName 
+    string errTableName = 2;
+}
+
+//桌台手动同步请求
+message DoAsyncRequest {
+	//用户账号
+	string account = 0;
+    //用户名称 
+    string name = 1;
+    //桌台ID
+    int32 tableId = 2;
+    //场次
+    int32 screenNum = 3;
+}
+
+message DoAsyncReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //时间不允许
+        errThrow = 10;  // 抛异常
+        errParams = 11; // 错误参数
+    }
+    //结果
+    Code result = 0;
+    // 剩余秒数
+    int32 lastTime = 1;
+}

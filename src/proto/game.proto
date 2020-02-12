@@ -1,0 +1,263 @@
+// game.proto
+
+syntax = "proto3";
+package game;
+
+import "player.proto";
+import "bill.proto";
+import "subGame.proto";
+
+//桌台游戏类型
+enum GameType {
+    None = 0;   //无效的标记
+    BaiJiaLe = 1;   //百家乐
+    LongHuDou = 2;  //龙虎斗
+    NiuNiu = 3;  //牛牛
+    TouBao = 4;    //骰宝
+    LunPan = 5;     //轮盘
+    Other = 6;      //其他
+}
+
+//桌台状态
+enum GameState {
+    None = 0;      //洗牌中
+    CountDown = 1;    //倒计时
+    NoMoreBet = 2;     //停止下注
+    CancelGame = 3;     //作废
+}
+
+//下注信息
+message BetInfo {
+    //下注类型
+    int32 type = 0;
+    //下注金额
+    int32 num = 1;
+}
+
+//游戏状态
+message GameInfo {
+    //游戏ID
+    string gameId = 0;
+    //桌台ID
+    int32 tableId = 1;
+    //倒计时剩余时间
+    int32 leftCount = 2;
+    //游戏结果
+    string result = 3;
+    //游戏总的倒计时
+    int32 countDown = 4;
+    //当前游戏下注信息
+    repeated BillInfo billInfo = 5;
+     //游戏结果操作类型 游戏的状态:  1-正常，2-修改, 3-作废
+    int32 state = 6;
+    // 当前页下标
+    int32 pageIndex = 7;
+    // 当前页数据量
+    int32 pageSize = 8;
+    //庄家点数
+    int32 pointZ = 9;
+    //闲家点数
+    int32 pointX = 10;
+    //庄家扑克牌
+    string pokerZ = 11;
+    //闲家扑克牌
+    string pokerX = 12;
+    //牛牛结果
+    string resultNN = 13;
+    //牛牛手牌
+    string pokerNN = 14;
+    //发牌下标
+    int32 dealIndex = 15;
+    //收否允许退格 1 不允许 2 允许
+    int32 allowBack = 16;
+    //百家乐彩池信息
+    BaiJiaLePoolInfo baijialePoolInfo = 17;
+    //百家乐用户下注信息
+    BaiJiaLeMemberCoinInfo baijialeMemberCoinInfo = 18;
+    //龙虎斗彩池信息
+    LongHuDouPoolInfo longhudouPoolInfo = 19;
+    //龙虎斗用户下注信息
+    LongHuDouMemberCoinInfo longhudouMemberCoinInfo = 20;
+    //牛牛彩池信息
+    NiuNiuPoolInfo niuniuPoolInfo = 21;
+    //牛牛用户下注信息
+    NiuNiuMemberCoinInfo niuniuMemberCoinInfo = 22;
+    //骰宝彩池信息
+    TouBaoPoolInfo toubaoPoolInfo = 23;
+    //骰宝用户下注信息
+    TouBaoMemberCoinInfo toubaoMemberCoinInfo = 24;
+    //轮盘彩池信息
+    LunPanPoolInfo lunpanPoolInfo = 25;
+    //轮盘用户下注信息
+    LunPanMemberCoinInfo lunpanMemberCoinInfo = 26;
+}
+
+//聊天信息
+message ChatInfo {
+    //账号
+    string account = 0;
+    //用户昵称
+    string name = 1;
+    //内容
+    string content = 2;
+    //类型
+    int32 chatType = 3;
+    //内容类型
+    int32 contentType = 4;
+    //桌台ID
+    int32 tableId = 5;
+    //设备类型
+    PlatFormType platType = 6;
+    //发送时间
+    string time = 7;
+}
+
+//************************************ Table Control ******************************
+
+//下注请求
+message BetRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //用户账号
+    string account = 1;
+    //下注信息
+    repeated BetInfo betInfo = 2;
+}
+//下注应答
+message BetReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        UserLimit = 2;     //不符合用户限红
+        TableLimit = 3;     //超出桌台限红
+        TableAllLimit = 4;     //超出桌台总限红
+    }
+    //结果
+    Code result = 0;
+    //下注订单
+    string billId = 1;
+    //用户游戏信息
+    UserGameInfo userInfo = 2;
+
+    //百家乐彩池信息
+    BaiJiaLePoolInfo baijialePoolInfo = 3;
+    //龙虎斗彩池信息
+    LongHuDouPoolInfo longhudouPoolInfo = 4;
+    //牛牛彩池信息
+    NiuNiuPoolInfo niuniuPoolInfo = 5;
+    //骰宝彩池信息
+    TouBaoPoolInfo toubaoPoolInfo = 6;
+    //轮盘彩池信息
+    LunPanPoolInfo lunpanPoolInfo = 7;
+}
+
+//退注请求
+message UnBetRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //用户账号
+    string account = 1;
+}
+//退注应答
+message UnBetReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //用户游戏信息
+    UserGameInfo userInfo = 1;
+
+    //百家乐彩池信息
+    BaiJiaLePoolInfo baijialePoolInfo = 2;
+    //龙虎斗彩池信息
+    LongHuDouPoolInfo longhudouPoolInfo = 3;
+    //牛牛彩池信息
+    NiuNiuPoolInfo niuniuPoolInfo = 4;
+    //骰宝彩池信息
+    TouBaoPoolInfo toubaoPoolInfo = 5;
+    //轮盘彩池信息
+    LunPanPoolInfo lunpanPoolInfo = 6;
+}
+
+//请求发送聊天内容
+message ChatRequest {
+    //账号
+    string account = 0;
+    //用户昵称
+    string name = 1;
+    //内容
+    string content = 2;
+    //类型
+    int32 chatType = 3;
+    //内容类型
+    int32 contentType = 4;
+    //桌台ID
+    int32 tableId = 5;
+    //设备类型
+    PlatFormType platType = 6;
+}
+//聊天消息应答
+message ChatReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Failed = 1;
+        BeforeToInterval = 2;   //聊天间隔中
+        MoreThanWord = 3;   //超出字数限制
+    }
+    Code result = 0;
+    //剩余时间
+    int32 leftCount = 1;
+}
+
+message Ping {
+    string time = 1;
+}
+
+message Pong {
+    string time = 1;
+}
+
+//获取所有版本号请求
+message GetAllVersionRequest {
+    int32 type = 0;
+}
+
+//获取所有版本号应答
+message GetAllVersionReplay {
+    enum Code {
+        Success = 0;
+        Failed = 1;
+    }
+    //结果
+    Code result = 0;
+    //移动端版本号
+    string mobile = 1;
+    //客户端版本号
+    string game = 2;
+    //电投端版本号
+    string phone = 3;
+}
+
+//获取游戏信息
+message GetGameRequest {
+    //桌台ID
+    int32 tableId = 0;
+}
+
+message GetGameReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //桌台ID
+    int32 tableId = 1;
+    //游戏信息
+    GameInfo gameInfo = 2;
+}

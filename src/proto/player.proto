@@ -1,0 +1,365 @@
+// game.proto
+
+syntax = "proto3";
+package player;
+
+import "odds.proto";
+import "limit.proto";
+import "subGame.proto";
+
+//平台类型
+enum PlatFormType {
+    PC = 0;
+    Mobile = 1;
+    H5 = 2;
+    Phone = 3;
+}
+
+//用户状态 1-正常，2-停用  3-暂停，4-作废 5-锁定
+enum UserStateType {
+    normal = 1;
+    disable = 2;
+    pause = 3;
+    toVoid = 4;
+    lock = 5;
+}
+
+//用户游戏下注信息
+message UserGameInfo {
+    //桌台ID
+	int32 tableId = 0;
+    //用户余额
+    int32 coin = 1;
+    //当前游戏下注金额
+    int32 billNum = 2;
+    //当前游戏赢取金额
+    int32 winNum = 3;
+    //预扣金额
+    int32 propayCoin = 4;
+    //百家乐用户下注信息
+    BaiJiaLeMemberCoinInfo baijialeMemberCoinInfo = 5;
+    //龙虎斗用户下注信息
+    LongHuDouMemberCoinInfo longhudouMemberCoinInfo = 6;
+    //牛牛用户下注信息
+    NiuNiuMemberCoinInfo niuniuMemberCoinInfo = 7;
+    //骰宝用户下注信息
+    TouBaoMemberCoinInfo toubaoMemberCoinInfo = 8;
+    //轮盘用户下注信息
+    LunPanMemberCoinInfo lunpanMemberCoinInfo = 9;
+}
+
+//用户信息
+message PlayerInfo{
+    //账号
+    string account = 0;
+    //密码
+    string password = 1;
+    //昵称
+    string name = 2;
+    //状态
+    UserStateType state = 3;
+    //剩余点数
+    int32 coin = 4;
+    //和局率
+    string drawRate = 5;
+    //洗码类型
+    int32 washType = 6;
+    //洗码率
+    string washRate = 7;
+    //占成
+    string stake = 8;
+    //备注
+    string remarks = 9;
+    //限红
+    repeated limitProject limit = 10;
+    //上级的账号
+    string parent = 11;
+    //不可进入的桌台数组
+    repeated int32 unEnableTable = 12;
+    //上下分
+    int32 upDownCoin = 13;
+    // 代理类型 代理的类型： 1-个人，2-直属
+    int32 agentType = 14;
+    //游戏洗码和局类型: 1-计算洗码，2-计算和局, 3-全部计算
+    int32 innerGameType = 15;
+    //预扣总额
+    int32 propayCoin = 16;
+    // 截图上传 1 不允许 2 允许
+    int32 openShot = 17;
+}
+
+//************************************ 消息体 ******************************
+
+//筹码信息请求
+message UserChipsRequest {
+    //用户账号
+    string account = 0;
+    //平台类型
+    PlatFormType platform = 1;
+}
+//筹码信息应答
+message UserChipsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //用户自定义筹码
+    repeated int32 chipInfo = 1;
+}
+
+//筹码设置请求
+message ModifyChipsRequest {
+    //用户账号
+    string account = 0;
+    //平台类型
+    PlatFormType platform = 1;
+    //用户筹码设置
+    repeated int32 chipInfo = 2;
+}
+//筹码设置应答
+message ModifyChipsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //用户自定义筹码
+    repeated int32 chipInfo = 1;
+}
+
+//用户修改密码
+message ModifyPwdRequest {
+    //用户账号
+    string account = 0;
+    //原密码
+    string oldPwd = 1;
+    //新密码
+    string newPwd = 2;
+    //平台类型
+    PlatFormType clientType = 3;
+}
+message ModifyPwdReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//创建
+message CreateRequest {
+    PlayerInfo info = 0;
+}
+message CreateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//更新
+message UpdateRequest {
+    PlayerInfo info = 0;
+}
+message UpdateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//获取用户游戏信息
+message GetUserGameResultRequest {
+    //账户
+    string account = 0;
+	//桌台ID
+	int32 tableId = 1;
+    //游戏ID
+    string gameId = 2;
+}
+message GetUserGameResultReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//桌台ID
+    int32 tableId = 1;    
+    //用户余额
+    int32 coin = 2;
+    //指定桌台输赢金额
+    int32 winNum = 3;
+    //是否下注 1 下注  2  未下注
+    int32 haveBet = 4;
+    //预扣总额
+    int32 propayCoin = 5;
+}
+
+//获取用户游戏的统计信息
+message UserStatisticsRequest {
+    //账户
+    string account = 0;
+	//开始查询日期
+    string startDate = 1;
+    //结束查询日期
+    string endDate = 2;
+}
+message UserStatisticsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //总赢
+    string winNum = 1;
+    //洗码费
+    string washFee = 2;
+    //和局费
+    string drawFee = 3;
+    //已结洗码费
+    string washedFee = 4;
+    //未结洗码费
+    string unWashedFee = 5;
+    //已结和局费
+    string drawedFee = 6;
+    //未结洗码费
+    string unDrawedFee = 7;
+    //洗码量
+    string washNum = 8;
+}
+
+//用户退出桌台
+message UserExitTableRequest {
+    //账户
+    string account = 0;
+    //平台类型
+    PlatFormType clientType = 1;
+}
+message UserExitTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//获得用户基本信息
+message GetUserBaseInfoRequest {
+    //账户
+    string account = 0;
+}
+message GetUserBaseInfoReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //用户余额
+    int32 coin = 1;
+    //用户限红
+    repeated limitProject userLimit = 2;
+    //预扣总额
+    int32 propayCoin = 3;
+    // 是否禁言 1 否 2 是
+    int32 forbidden = 4;
+
+}
+
+//用户自助结算
+message GetCalculateCoinBySelfRequest {
+    //账户
+    string account = 0;
+}
+
+message GetCalculateCoinBySelfReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Failed = 1;
+        BatchWashing = 2; //系统正在批量结洗，请稍等
+        UserWashing = 3;  //该用户正在被结洗，请稍等
+        NoWashNum = 4;  //结算失败，没有可结算数据
+        NoWashTime = 5;     //结算失败，当前不在可结洗时间内
+    }
+    //结果
+    Code result = 0;
+    //用户余额
+    int32 coin = 1;
+    //结算金额
+    int32 washNum = 2;
+    //结算时间数组
+    string washTimeArr = 3;
+}
+
+//获取发言间隔配置
+message GetChatConfigRequest {
+    //账户
+    string account = 0;
+}
+
+message GetChatConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //返回码
+    Code result = 0;
+    //剩余可发言时间 
+    int32 leftCount = 1;
+    //字数限制  -1 则无限制
+    int32 word = 2;
+}
+
+//获取公司入款配置
+message GetCompanyPayRequest {
+    //账号
+    string account = 0;
+}
+
+message GetCompanyPayReplay {
+    enum Code {
+        Success = 0;
+        Failed = 1;
+    }
+    //返回码
+    Code result = 0;
+    //配置信息
+    string info = 1;
+}
+
+// 图片上传
+message UploadImageRequest {
+    // 图片数据源
+    string imgData = 0;
+    // 账号
+    string account = 1;
+    // 桌台
+    string tableName = 2;
+    // 场次
+    int32 screenId = 3;
+    // 局数
+    int32 inningId = 4;
+    // 时间
+    string time = 5;
+}

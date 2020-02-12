@@ -1,0 +1,193 @@
+// table.proto
+
+syntax = "proto3";
+package table;
+
+import "game.proto";
+import "player.proto";
+import "odds.proto";
+import "limit.proto";
+
+//视频基础信息
+message BaseVideo {
+	//类型
+	string type = 1;
+	//地址
+	repeated string url = 2;
+}
+
+//视频信息
+message VideoInfo {
+	//名称
+	string name = 0;
+	//基础信息
+	repeated BaseVideo baseVideo = 1;
+}
+
+//游戏桌台信息
+message TableInfo {
+	//游戏类型
+	GameType type = 0;
+	//状态
+	GameState state = 1;
+	//桌台ID
+	int32 tableId = 2;
+	//场次ID
+	int32 screenId = 3;
+	//局数ID
+	int32 inningId = 4;
+	//桌台名字
+    string name = 5;
+    // 倒计时时间
+    int32 countDown= 6;
+    //md5 码
+    string encryptId = 7;
+	//结果记录
+    repeated string results = 8;
+    //桌台默认筹码
+    repeated int32 chips = 9;
+	//当前游戏
+    GameInfo gameInfo = 10;
+    //用户的赔率
+	OddsInfo odds = 11;
+    //限红
+    limitProject limit = 12;
+    //视频信息
+    repeated VideoInfo videoInfo = 13;
+    //当前桌台用户
+    int32 userNums = 14;
+    // 内部ip
+    string innerIp = 15;
+    // 桌台最大限红
+    int32 maxAll = 16;
+    // 桌台限红方案id
+    int32 limitId = 17;
+    // 电投视频
+    repeated VideoInfo videoPhoneInfo = 18;
+    // 用于排序的桌台下标
+    int32 tableIndex = 19;
+    //桌台简称
+    string nickName = 20;
+    //桌台类型 0 普通台 1 虚拟台
+    int32 tableType = 21;
+    // h5视频
+    repeated VideoInfo videoH5Info = 22;
+	//结果记录
+    repeated string resultsJson = 23;
+    // 录入端视频
+    repeated VideoInfo videoControlInfo = 24;
+    // 桌台同步标识值
+    string tableSyncId = 25;
+    // 桌台特征ID
+    string featureId = 26;
+    // 桌台新玩法开关 1 普通玩法 2 新玩法
+    int32 playTypeSwitch = 27;
+}
+
+//******************************************* 消息体 *******************************************
+
+//所有桌台信息请求
+message AllTableRequest {
+	//用户账号
+	string account = 0;
+    // 当前页下标
+    int32 pageIndex = 1;
+    // 当前页数据量
+    int32 pageSize = 2;
+    //客户端类型
+    PlatFormType clientType = 3;
+    //请求时间
+    string requestTime = 4;
+}
+//所有桌台信息请求
+message AllTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//游戏信息列表
+	repeated TableInfo info = 1;
+    //请求时间
+    string requestTime = 4;
+}
+
+//桌台信息请求
+message TableRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //请求时间
+    string requestTime = 4;
+}
+//桌台信息应答
+message TableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //桌台信息
+    TableInfo tableInfo = 1;
+    //请求时间
+    string requestTime = 4;
+}
+
+//进入桌台请求
+message EnterRequest {
+	//用户ID
+	string account = 0;
+	//桌台ID
+	int32 tableId = 1;
+    //客户端类型
+    PlatFormType clientType = 2;
+    //请求时间
+    string requestTime = 4;
+}
+//进入桌台应答
+message EnterReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//桌台ID
+    int32 tableId = 1;
+    //当前游戏
+    GameInfo gameInfo = 2;
+	//用户信息
+	UserGameInfo userInfo = 3;
+    //请求时间
+    string requestTime = 4;
+}
+
+//所有桌台游戏信息请求
+message AllGameRequest {
+	//用户ID
+	string account = 0;
+    // 当前页下标
+    int32 pageIndex = 1;
+    // 当前页数据量
+    int32 pageSize = 2;
+}
+//所有桌台游戏信息应答
+message AllGameReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //当前游戏
+    repeated GameInfo gameInfo = 2;
+}
+
+
+
+

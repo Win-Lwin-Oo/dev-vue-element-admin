@@ -1,0 +1,92 @@
+// accountPrinter.proto
+
+syntax = "proto3";
+package accountPrinter;
+
+//打印信息
+message TextInfo {
+    //字体大小
+    int32 fontSize = 0;
+    //文字
+    string text = 1;
+}
+//模板消息
+message AllPrintInfo {
+    // id
+    int32 id = 0;
+    //是否删除
+    int32 isdel = 1;
+    //模板消息
+    repeated TextInfo textInfo = 3;
+    //打印机IP
+    string ip = 4;
+}
+/********* 消息体 **********/
+
+//打印自定义小票请求
+message PrintCustomReceiptRequest {
+    string printerIp = 0;
+    //打印信息
+    repeated TextInfo textInfo = 1;
+}
+
+//打印自定义小票应答
+message PrintCustomReceiptReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+        //打印机ip错误
+        ErrorIp = 2;
+        //缺少打印的内容
+        ErrorText = 3;
+    }
+    Code result = 0;
+}
+// 报存模板
+message SetPrintTemplateRequest {
+    string printerIp = 0;
+    //打印信息
+    repeated TextInfo textInfo = 1;
+}
+
+message SetPrintTemplateReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+        //打印机ip错误
+        ErrorIp = 2;
+        //缺少打印的内容
+        ErrorText = 3;
+    }
+    Code result = 0;
+}
+// 获取所有模板
+message GetAllPrintTemplateRequest {
+    string account = 0;
+}
+
+message GetAllPrintTemplateReplay {
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    //模板信息
+    repeated AllPrintInfo info = 1;
+}
+
+// 删除模板
+message DeletePrintTemplateRequest {
+    string account = 0;
+    int32 id = 1;
+}
+
+message DeletePrintTemplateReplay {
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+}

@@ -1,0 +1,237 @@
+syntax = "proto3";
+package control;
+
+import "table.proto";
+import "game.proto";
+
+
+//管理员信息
+message ContorlInfo {
+    //账号
+    string account = 0;
+    //密码
+    string password = 1;
+    //昵称
+    string name = 2;
+    //状态  //1-正常，2-禁用
+    int32 state = 3;
+}
+//************************************ 消息体 ******************************
+
+//管理员登录请求
+message LoginRequest {
+    //用户账号
+    string account = 0;
+    //用户密码
+    string password = 1;
+    // 管理端版本号
+    string version = 2;
+}
+message LoginReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //桌台信息
+    TableInfo info = 1;
+}
+
+// 获取桌台信息
+message GetTableRequest {
+    //用户账号
+    string account = 0;
+    //用户密码
+    string password = 1;
+}
+message GetTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //桌台信息
+    TableInfo info = 1;
+}
+
+//管理员创建请求
+message RegisterRequest {
+    //用户账号
+    string account = 0;
+    //用户密码
+    string password = 1;
+    //用户名
+    string name = 2;
+    //状态  //1-正常，2-禁用
+    int32 state = 3;
+}
+message RegisterReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//切换管理员的账号状态
+message UpdateRequest {
+    //用户信息
+    ContorlInfo info = 0;
+}
+message UpdateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//管理员列表请求
+message AllRequest {
+    //用户账号
+    string account = 0;
+}
+message AllReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //管理员信息
+    repeated ContorlInfo info = 1;
+}
+
+//开始游戏
+message StartGameRequest {
+    //账号
+    string account = 0;
+}
+message StartGameReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //桌台ID
+    int32 tableId = 1;
+    //桌台游戏信息
+    GameInfo gameInfo = 2;
+}
+
+//游戏结果
+message GameResultRequest {
+    //操作者账号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    //游戏结果
+    string resultFirst = 2;
+    //游戏结果
+    string resultSecond = 3;
+    //游戏ID
+    string gameId = 4;
+    // 庄手牌
+    string pokerZ = 5;
+    // 闲手牌
+    string pokerX = 6;
+    // 牛牛手牌
+    string pokerNN = 7;
+    // 第一次点击结果与数据提交的时间差
+    string distantTime = 8;
+    // 骰宝结果录入
+    repeated int32 sicBoArr = 9;
+}
+message GameResultReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//作废游戏结果
+message CancelResultRequest {
+    //账号
+    string account = 0;
+    //游戏ID
+    string gameId = 1;
+}
+message CancelResultReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//桌台洗牌
+message ShuffleTableRequest {
+    //账号
+    string account = 0;
+}
+message ShuffleTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //桌台信息
+    TableInfo info = 1;
+}
+
+//监台管理员退出
+message QuitRequest {
+    //账号
+    string account = 0;
+}
+message QuitReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+message VirtualInfoRequest {
+    //桌台ID
+    int32 tableId = 0;
+    // 所属游戏id
+    string gameId = 1;
+    // 庄闲类型
+    int32 type = 2;
+    // 位置类型
+    int32 posType = 3;
+    // 牌值
+    string poker = 4;
+}
+
+//虚拟台信息
+message VirtualInfoReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    Code result = 0;
+    GameInfo info = 1;
+}

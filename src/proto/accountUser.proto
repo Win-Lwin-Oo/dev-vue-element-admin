@@ -1,0 +1,101 @@
+// accountUser.proto
+
+syntax = "proto3";
+package accountUser;
+
+//管理员所有信息
+message AdminOptionInfo {
+    //账号
+    string account = 0;
+    //密码
+    string password = 1;
+    //昵称
+    string name = 2;
+    //状态 1-正常   2-停用
+    int32 state = 3;
+}
+
+/********* 消息体 **********/
+
+//创建管理账号请求
+message CreateAccountRequest {
+    //操作者账号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    //创建的账号信息
+    AdminOptionInfo info = 2;
+}
+
+//创建管理账号应答
+message CreateAccountReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+        RepeatAccount = 2;
+    }
+    Code result = 1;
+}
+
+//编辑账号请求
+message ModifyAccountRequest {
+    //操作者账号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    //修改的账号信息
+    AdminOptionInfo info = 2;
+}
+
+//编辑账号应答
+message ModifyAccountReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 1;
+}
+
+//所有管理账号请求
+message AllOptionRequest {
+    //查询者账号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+}
+
+//所有管理账号应答
+message AllOptionReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 1;
+    //管理操作者数组
+    repeated AdminOptionInfo info = 2;
+}
+
+//修改密码请求
+message ModifyPasswordRequest {
+    //账号
+    string account = 0;
+    //旧密码
+    string oldPwd = 1;
+    //新密码
+    string newPwd = 2;
+}
+
+//修改密码应答
+message ModifyPasswordReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    //结果
+    Code result = 1;
+}
+

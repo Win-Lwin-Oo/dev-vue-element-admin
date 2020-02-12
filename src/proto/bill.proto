@@ -1,0 +1,220 @@
+// bill.proto
+
+syntax = "proto3";
+package bill;
+
+import "game.proto";
+import "log.proto";
+
+//订单记录信息
+message BillInfo {
+    //桌台名称
+    string tableName = 0;
+    //场次ID
+    int32 screenId = 1;
+    //局数ID
+    int32 inningId = 2;
+    //下注时间
+    string betTime = 3;
+    //结算时间
+    string resultTime = 4;
+    //游戏类型
+    GameType gameType = 5;
+    //输赢金额
+    string winNum = 6;
+    //剩余金额
+    string coinE = 7;
+    //押庄金额
+    int32 numZ = 8;
+    //押闲金额
+    int32 numX = 9;
+    //押和金额
+    int32 numH = 10;
+    //押庄对金额
+    int32 numZd = 11;
+    //押闲对金额
+    int32 numXd = 12;
+    //总押码
+    int32 billNum = 13;
+    //订单结果
+    string result = 14;
+    //和局量
+    int32 drawNum = 15;
+    //和局率
+    string drawRate = 16;
+    //和局费
+    string drawFee = 17;
+    //洗码量
+    int32 washNum = 18;
+    //洗码率
+    string washRate = 19;
+    //洗码费
+    string washFee = 20;
+    //Ip
+    string ip = 21;
+    //地址
+    string address = 22;
+    //押注前金额
+    string coinB = 23;
+    // 洗码类型
+    int32 washType = 24;
+    //桌台ID
+    int32 tableId = 25;
+    // 订单id
+    string billId = 26;
+    // 下注者帐号
+    string account = 27;
+    // 下注者 名称
+    string userName = 28;
+    // 订单状态
+    int32 state = 29;
+    //剩余金额(临时计算。。游戏端)
+    string leftCoin = 30;
+    // 订单结算后点数
+    int32 surplusCoin = 31;
+
+    //订单操作类型
+    string typeStr = 32;
+    // 更新时间
+    string updateAt = 33;
+    // 所属游戏id
+    string gameId = 34;
+
+    //已结洗码费
+    string washedFee = 35;
+    //未结洗码费
+    string unWashedFee = 36;
+    //已结和局费
+    string drawedFee = 37;
+    //已结和局费
+    string unDrawedFee = 38;
+
+    //小费
+    int32 dividend = 39;
+    // 桌台排序下标
+    int32 tableIndex = 40;
+    //预付金额
+    string propayCoin = 41;
+    //扩展押注项-大、龙单、闲1平
+    int32 num1 = 42;
+    //扩展押注项-小、龙双、闲1翻
+    int32 num2 = 43;
+    //扩展押注项-任意对子、龙红、闲2平
+    int32 num3 = 44;
+    //扩展押注项-完美对子、龙黑、闲2翻
+    int32 num4 = 45;
+    //扩展押注项-庄龙宝、虎单、闲3平
+    int32 num5 = 46;
+    //扩展押注项-闲龙宝、虎双、闲3翻
+    int32 num6 = 47;
+    //扩展押注项-超级6、虎红
+    int32 num7 = 48;
+    //扩展押注项-虎黑
+    int32 num8 = 49; 
+    // 是否是免佣订单 1 非免佣，2 免佣
+    int32 isCommission = 50;
+    // 押注类型 目前骰宝、轮盘用，跟随对应game的betType
+    int32 betType = 51;
+    // 押注金额
+    int32 betNum = 52;
+}
+//历史记录类型
+enum RecordType {
+    All = 0;     //所有
+    Normal = 1;   //正常
+    Invalid = 2;   //作废
+}
+
+//************************************ 消息体 ******************************
+
+//查询订单记录请求
+message QueryBillRequest {
+    //账号
+    string account = 0;
+    //开始查询日期
+    string startDate = 1;
+    //结束查询日期
+    string endDate = 2;
+    //类型  0:所有，1-有效，2-作废
+    RecordType type = 3;
+    //游戏类型
+    GameType gameType = 4;
+    // 当前页下标
+    int32 pageIndex = 5;
+    // 当前页数据量
+    int32 pageSize = 6;
+    // 当前排序条件
+    string sortKey = 7;
+    // 升序降序 1 升序 2 降序
+    int32 sortType = 8;
+}
+//查询订单记录应答
+message QueryBillReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //类型
+    RecordType type = 1;
+    //类型
+    repeated BillInfo info = 2;
+    // 当前页下标
+    int32 pageIndex = 3;
+    // 当前页数据量
+    int32 pageSize = 4;
+    // 订单总数量
+    int32 billCount = 5;
+    // 总赢合计
+    int32 winNumTotal = 6;
+    // 洗码合计
+    string washFeeTotal = 7;
+    // 和局合计
+    string drawFeeTotal = 8;
+
+    //已结洗码费合计
+    string washedFeeTotal = 10;
+    //未结洗码费合计
+    string unWashedFeeTotal = 11;
+    //已结和局费合计
+    string drawedFeeTotal = 12;
+    //未结和局费合计
+    string unDrawedFeeTotal = 13;
+
+    //参与的有效游戏数量
+    int32 gameNum = 14;
+    //查询订单起始时间
+    string startDate = 15;
+}
+
+//通过游戏查询订单记录请求
+message QueryBillByGameRequest {
+    //账号
+    string account = 0;
+    //查询日期
+    string date = 1;
+    //类型
+    RecordType type = 2;
+    //游戏类型
+    string gameId = 3;
+    // 当前页下标
+    int32 pageIndex = 4;
+    // 当前页数据量
+    int32 pageSize = 5;
+}
+//通过游戏查询订单记录应答
+message QueryBillByGameReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //类型
+    RecordType type = 1;
+    //类型
+    repeated BillInfo info = 2;
+}

@@ -1,0 +1,41 @@
+// message.proto
+
+syntax = "proto3";
+package message;
+
+message Head {
+    optional string session = 0;
+}
+
+//Request
+message RequestMessage {
+    optional Head head = 0;
+    required bytes body = 1;
+}
+
+enum ReplayCode {
+    Success = 0;             //成功
+    InvalidSession = 20;     //无效的Session
+    ExpiredSession = 21;     //Session过期
+    ErrorRequest = 30;       //proto解析失败
+}
+
+message ReplayHead {
+    //请求结果
+    required ReplayCode result = 0;
+    //login接口才有
+    optional string session = 1;
+}
+
+//Replay
+message ReplayMessage {
+    //head
+    required ReplayHead head = 0;
+    //业务数据
+    optional bytes body = 1;
+}
+
+// 网络信息结构
+message WebMessage {
+    string msg = 0;
+} 

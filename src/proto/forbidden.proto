@@ -1,0 +1,105 @@
+syntax = "proto3";
+package forbidden;
+
+
+
+message ForbiddenBody {
+    // 备注
+    string remarks = 0;
+    // 结束时间
+    string endTime = 1;
+}
+
+message UserInfo {
+    // 账号
+    string account = 0;
+    // 名称
+    string name = 1;
+    // 开始禁言时间
+    string beginTime = 2;
+    // 结束禁言时间
+    string endTime = 3;
+}
+
+// 设置禁言
+message SetForbiddenRequest {
+    // 操作者账号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 被操作者账号
+    repeated UserInfo userInfo = 2;
+    // 禁言配置
+    ForbiddenBody info = 3;
+}
+message SetForbiddenReply {
+    enum Code {
+        Success = 0;
+        //参数错误
+        Failed = 1;
+        // 没有正确用户
+        ErrUser = 2;
+        // 错误管理员
+        ErrAdmin = 3;
+        // 异常捕捉
+        ErrCatch = 10;
+    }
+    //结果
+    Code result = 0;
+}
+
+// 取消禁言
+message VoidForbiddenRequest {
+    // 操作者账号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 被操作者账号
+    repeated UserInfo userInfo = 2;
+}
+message VoidForbiddenReply {
+    enum Code {
+        Success = 0;
+        //参数错误
+        Failed = 1;
+        // 没有正确用户
+        ErrUser = 2;
+        // 错误管理员
+        ErrAdmin = 3;
+        // 异常捕捉
+        ErrCatch = 10;
+    }
+    //结果
+    Code result = 0;
+}
+
+// 获取禁言用户
+message GetForbiddenRequest {
+    // 操作者账号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 当前页下标
+    int32 pageIndex = 2;
+    // 当前页大小
+    int32 pageSize = 3;
+}
+message GetForbiddenReply {
+    enum Code {
+        Success = 0;
+        //参数错误
+        Failed = 1;
+        // 没有正确用户
+        ErrUser = 2;
+        // 错误管理员
+        ErrAdmin = 3;
+        // 异常捕捉
+        ErrCatch = 10;
+    }
+    //结果
+    Code result = 0;
+    // 禁言用户
+    repeated UserInfo info= 1;
+    // 数据总量
+    int32 count = 2;
+}

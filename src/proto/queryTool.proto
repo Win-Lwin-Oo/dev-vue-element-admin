@@ -1,0 +1,366 @@
+// queryTool.proto
+// 查询工具的查询信息
+
+syntax = "proto3";
+package queryTool;
+
+import "game.proto";
+
+//一局游戏的信息
+message InningInfo {
+    //局ID
+    int32 id = 0;
+    //局内总赢
+    int32 winNum = 1;
+    //小费-抽成
+    int32 littleFee = 2;
+    //押庄
+    int32 numZ = 3;
+    //押闲
+    int32 numX = 4;
+    //押和
+    int32 numH = 5;
+    //押庄对
+    int32 numZD = 6;
+    //押闲对
+    int32 numXD = 7;
+    //结果
+    string result = 8;
+    //结果录入时间
+    string time = 9;
+    //游戏状态
+    string state = 10;
+    //游戏类型
+    int32 gameType = 11;
+    // 游戏ID
+    string gameId = 12;
+    // 游戏结果状态  1-正常，2-修改, 3-作废
+    int32 resultState = 13; 
+    // 开始录入结果时间
+    string scanTime = 14;
+    //百家乐彩池信息
+    BaiJiaLePoolInfo baijialePoolInfo = 15;
+    //龙虎斗彩池信息
+    LongHuDouPoolInfo longhudouPoolInfo = 16;
+    //牛牛彩池信息
+    NiuNiuPoolInfo niuniuPoolInfo = 17;
+    //骰宝彩池信息
+    TouBaoPoolInfo toubaoPoolInfo = 18;
+    //轮盘彩池信息
+    LunPanPoolInfo lunpanPoolInfo = 19;
+
+}
+
+//一场游戏的信息
+message ScreenInfo {
+    //场次ID
+    int32 id = 0;
+    //总赢
+    int32 winNum = 1;
+    //小费-抽成
+    int32 littleFee = 2;
+    //押庄
+    int32 numZ = 3;
+    //押闲
+    int32 numX = 4;
+    //押和
+    int32 numH = 5;
+    //押庄对
+    int32 numZD = 6;
+    //押闲对
+    int32 numXD = 7;
+    //所有局内信息
+    repeated InningInfo info = 8;
+    //所有局的结果
+    repeated string result = 9;
+    // 桌台游戏类型
+    int32 gameType = 10;
+    //百家乐彩池信息
+    BaiJiaLePoolInfo baijialePoolInfo = 11;
+    //龙虎斗彩池信息
+    LongHuDouPoolInfo longhudouPoolInfo = 12;
+    //牛牛彩池信息
+    NiuNiuPoolInfo niuniuPoolInfo = 13;
+    //骰宝彩池信息
+    TouBaoPoolInfo toubaoPoolInfo = 14;
+    //轮盘彩池信息
+    LunPanPoolInfo lunpanPoolInfo = 15;
+    // 桌台ID
+    int32 tableId = 16;
+}
+
+//桌台的统计信息
+message TableInfo {
+    //桌台名称
+    string name = 0;
+    //总赢
+    int32 winNum = 1;
+    //小费-抽成
+    int32 littleFee = 2;
+    //押庄
+    int32 numZ = 3;
+    //押闲
+    int32 numX = 4;
+    //押和
+    int32 numH = 5;
+    //押庄对
+    int32 numZD = 6;
+    //押闲对
+    int32 numXD = 7;
+    //所有场内信息
+    repeated ScreenInfo info = 8;
+    // 统计信息日期
+    string date = 9;
+    // 桌台限红方案id
+    int32 limitId = 10;
+    // 桌台排序下标
+    int32 tableIndex = 11;
+    //桌台简称
+    string nickName = 12;
+    // 桌台游戏类型
+    int32 gameType = 13;
+    //百家乐彩池信息
+    BaiJiaLePoolInfo baijialePoolInfo = 14;
+    //龙虎斗彩池信息
+    LongHuDouPoolInfo longhudouPoolInfo = 15;
+    //牛牛彩池信息
+    NiuNiuPoolInfo niuniuPoolInfo = 16;
+    //骰宝彩池信息
+    TouBaoPoolInfo toubaoPoolInfo = 17;
+    //轮盘彩池信息
+    LunPanPoolInfo lunpanPoolInfo = 18;
+}
+
+// 多日桌台统计信息
+message TableInfoByDates {
+    //桌台名称
+    string name = 0;
+    //总赢
+    int32 winNum = 1;
+    //小费-抽成
+    int32 littleFee = 2;
+    //押庄
+    int32 numZ = 3;
+    //押闲
+    int32 numX = 4;
+    //押和
+    int32 numH = 5;
+    //押庄对
+    int32 numZD = 6;
+    //押闲对
+    int32 numXD = 7;
+    // 桌台信息
+    repeated TableInfo info = 8;
+    // 桌台排序下标
+    int32 tableIndex = 9;
+    // 游戏类型
+    int32 gameType = 10;
+    //百家乐彩池信息
+    BaiJiaLePoolInfo baijialePoolInfo = 11;
+    //龙虎斗彩池信息
+    LongHuDouPoolInfo longhudouPoolInfo = 12;
+    //牛牛彩池信息
+    NiuNiuPoolInfo niuniuPoolInfo = 13;
+    //骰宝彩池信息
+    TouBaoPoolInfo toubaoPoolInfo = 14;
+    //轮盘彩池信息
+    LunPanPoolInfo lunpanPoolInfo = 15;
+}
+
+//桌台场次
+message ScreenNum {
+    //桌台Id
+    int32 tableId = 0;
+    //桌台名称
+    string name = 1;
+    //场次
+    int32 num = 2;
+    // 桌台排序下标
+    int32 tableIndex = 3;
+    int32 gameType = 4;
+    // 桌台类型 虚拟台2 普通台1
+    int32 tableType = 5;
+    // 桌台同步码
+    string tableSyncId = 6;
+}
+
+//游戏信息
+message GameBaseInfo {
+    //游戏ID
+    string gameId = 0;
+    //桌台名称
+    string tableName = 1;
+    //场次
+    int32 screenId = 2;
+    //局数
+    int32 inningId = 3;
+    //开始时间
+    string startTime = 4;
+    //结束时间
+    string endTime = 5;
+    //录入时间
+    string resultTime = 6;
+    //游戏结果
+    string result = 7;
+    //状态
+    string state = 8;
+    //是否有效
+    int32 isValid = 9;
+    //是否被修改
+    int32 isModify = 10;
+    //是否作废
+    int32 isAbort = 11;
+    //游戏类型
+    GameType gameType = 12;
+    //押庄总额
+    int32 coinZ = 13;
+    //押闲总额
+    int32 coinX = 14;
+    //押和总额
+    int32 coinH = 15;
+    //押庄对总额
+    int32 coinZd = 16;
+    //押闲对总额
+    int32 coinXd = 17;
+    //总的押码量
+    int32 totalBet = 18;
+    //总赢
+    int32 winNum = 19;
+
+    //押注信息
+    string coinJson = 20;
+    //用户押注信息
+    string memberCoinJson = 21;
+    // 庄手牌
+    string pokerZ = 22;
+    // 闲手牌
+    string pokerX = 23;
+    // 牛牛手牌
+    string pokerNN = 24;
+    //结果数据
+    string resultJson = 25;
+    // 开始录入结果时间
+    string scanTime = 26;
+}
+//******************************************* 消息体 *******************************************
+
+//所有桌台信息请求
+message QueryTableRequest {
+	//用户账号
+    string account = 0;
+    //查询日期
+    string date = 1;
+}
+message QueryTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//桌台信息列表
+	repeated TableInfo info = 1;
+}
+
+//时间段内有桌台信息请求
+message QueryTableByDateRequest {
+	//用户账号
+    string account = 0;
+    //查询日期
+    string startDate = 1;
+    //查询日期
+    string endDate = 2;
+    // 当前页下标
+    int32 pageIndex = 3;
+    // 当前页数据量
+    int32 pageSize = 4;
+    // 游戏类型
+    int32 gameType = 5;
+}
+message QueryTableByDateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//桌台信息列表
+	repeated TableInfoByDates info = 1;
+}
+
+//桌台指定日期的场次
+message ScreenNumRequest {
+    //查询日期
+    string date = 0;
+    //查询当天
+    int32 currentDay = 1;
+}
+message ScreenNumReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//桌台信息列表
+	repeated ScreenNum info = 1;
+}
+
+//桌台指定场次的游戏
+message GamesRequest {
+    //查询日期
+    string date = 0;
+    //桌台ID
+    int32 tableId = 1;
+    //场次
+    int32 screenId = 2;
+    //查询类型
+    int32 type = 3; // 0: 全部, 1: 已结束
+    // 订单所属游戏ID
+    string gameId = 4;
+    //查询当日
+    int32 currentDay = 5;
+}
+message GamesReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+
+    repeated string resultArr = 1;
+	//桌台信息列表
+    repeated GameBaseInfo info = 2;
+    repeated string resultsJson = 3;
+}
+
+//桌台指定场次的游戏
+message QueryGamesRequest {
+    //查询日期
+    string date = 0;
+    //桌台ID
+    int32 tableId = 1;
+    //场次
+    int32 screenId = 2;
+    //查询类型
+    int32 type = 3; // 0: 全部, 1: 已结束
+}
+message QueryGamesReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+
+    repeated string resultArr = 1;
+	//桌台信息列表
+    repeated InningInfo info = 2;
+    repeated string resultsJson = 3;
+}

@@ -1,0 +1,90 @@
+syntax = "proto3";
+package transfer;
+
+//管理员信息
+message TransferInfo {
+    //账号
+    string account = 0;
+    //密码
+    string password = 1;
+    //昵称
+    string name = 2;
+    //状态  //1-正常，2-禁用
+    int32 state = 3;
+}
+//************************************ 消息体 ******************************
+
+//管理员登录请求
+message LoginRequest {
+    //用户账号
+    string account = 0;
+    //用户密码
+    string password = 1;
+}
+message LoginReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    // 汇款员信息
+    TransferInfo info = 1;
+}
+
+
+//汇款员创建请求
+message RegisterRequest {
+    //用户账号
+    string account = 0;
+    //用户密码
+    string password = 1;
+    //用户名
+    string name = 2;
+    //状态  //1-正常，2-禁用
+    int32 state = 3;
+}
+message RegisterReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//切换管理员的账号状态
+message UpdateRequest {
+    //用户信息
+    TransferInfo info = 0;
+}
+message UpdateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//汇款员列表请求
+message AllRequest {
+    //用户账号
+    string account = 0;
+    // 状态过滤 0 全部 1 启用
+    int32 stateFilter = 1;
+}
+message AllReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //管理员信息
+    repeated TransferInfo info = 1;
+}

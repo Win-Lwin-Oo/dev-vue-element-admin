@@ -1,0 +1,202 @@
+// notice.proto
+
+syntax = "proto3";
+package notice;
+
+import "game.proto";
+//公告类型
+enum NoticeType {
+    Table_All = 1;
+    Table_Part = 2;
+    Agent_All = 3;
+    Agent_Part = 4;
+    Member_All = 5;
+    Member_Part = 6;
+    Phone_All = 7;
+    Phone_Part = 8;
+    Home_All = 9;
+}
+
+enum ReleaseType {
+    immediate = 1; // 立即发送
+    regular = 2; // 延时发送
+    noSend = 3; // 暂不发送
+}
+
+//公告信息
+message NoticeInfo{
+    //操作账号
+    string account = 0;
+    //公告标题
+    string title = 1;
+    //公告内容
+    string content = 2;
+    //发布时间
+    string releaseTime = 3;
+    //发布对象
+    repeated string target = 4;
+    //发布对象
+    repeated string targetName = 5;
+    //公告类型
+    NoticeType type = 6;
+    //公告ID
+    int32 id = 7;
+    //操作人的昵称
+    string name = 8;
+    //是否发布
+    int32 released = 9;
+    // 发布时间类型
+    ReleaseType releaseType = 10;
+}
+
+message TableInfo{
+    //桌台ID
+    int32 tableId = 0;
+    //桌台名称
+    string tableName = 1;
+    // 桌台排序下标
+    int32 tableIndex = 2;
+    //桌台简称
+    string nickName = 3;
+}
+
+message TableList{
+    //桌台类型
+    GameType type = 0;
+    //桌台信息
+    repeated TableInfo info = 1;
+}
+//************************************ 消息体 ******************************
+
+//公告获取
+message GetRequest {
+    //公告类型
+    NoticeType type = 0;
+    // 当前页下标
+    int32 pageIndex = 1;
+    // 当前页数据量
+    int32 pageSize = 2;
+}
+message GetReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //信息集合
+    repeated NoticeInfo info = 1;
+}
+
+//公告创建
+message CreateRequest {
+    //操作者帐号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    //公告数据
+    NoticeInfo info = 2;
+}
+message CreateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //创建的数据
+    NoticeInfo info = 1;
+}
+
+//公告更新
+message UpdateRequest {
+    //操作者帐号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    //公告数据
+    NoticeInfo info = 2;
+}
+message UpdateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //更新的数据
+    NoticeInfo info = 1;
+}
+
+//删除公告
+message DeleteRequest {
+    //操作者帐号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    int32 id = 2;
+}
+message DeleteReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//桌台列表
+message TableRequest {
+    string account = 0;
+}
+message TableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //桌台数据
+    repeated TableList info = 1;
+}
+
+//公告代理获取
+message GetAgentRequest {
+    //账号
+    string account = 0;
+}
+message GetAgentReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //信息集合
+    repeated NoticeInfo info = 1;
+}
+
+//公告会员获取
+message GetMemberRequest {
+    //账号
+    string account = 0;
+    //会员类型
+    int32 type = 1; // 0:网投，1:电投
+}
+message GetMemberReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //信息集合
+    repeated NoticeInfo info = 1;
+}

@@ -1,0 +1,266 @@
+//accountTable.proto
+
+syntax = "proto3";
+package accountTable;
+import "game.proto";
+
+//游戏桌台信息
+message TableInfo {
+    //游戏类型
+	GameType type = 0;
+	//状态
+	GameState state = 1;
+	//桌台ID
+	int32 tableId = 2;
+	//场次ID
+	int32 screenId = 3;
+	//局数ID
+	int32 inningId = 4;
+	//桌台名字
+    string name = 5;
+    // 倒计时时间
+    int32 countDown= 6;
+    //md5 码
+    string encryptId = 7;
+    //当前游戏
+    GameInfo gameInfo = 8;
+    // 用于排序的桌台下标
+    int32 tableIndex = 9;
+    //桌台简称
+    string nickName = 10;
+}
+
+//绑定的桌台信息
+message BindTableInfo {
+    //桌台ID
+    int32 tableId = 0;
+    //打印机IP
+    string printIp = 1;
+    //桌台信息
+    TableInfo tableInfo = 2;
+    //自动获取状态 1 自动 2 手动
+    int32 autoRecieve = 3;
+    // 当前局游戏的手动获取次数
+    int32 getNumber = 4;
+    // 是否打印小票
+    int32 enablePrint = 5;
+}
+
+/********************** 消息体 *********************/
+
+//获取绑定的桌台请求
+message AllBindTableRequest {
+    //账号
+    string account = 0;
+}
+
+//获取绑定的桌台应答
+message AllBindTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    repeated BindTableInfo info = 1;
+}
+
+//所有桌台信息请求
+message AllTableRequest {
+	//用户账号
+	string account = 0;
+}
+//所有桌台信息请求
+message AllTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//游戏信息列表
+	repeated TableInfo info = 1;
+}
+
+//绑定桌台请求
+message BindTableRequest {
+    //账号
+    string account = 0;
+    //桌台ID
+    int32 tableId = 1;
+    //打印机IP
+    string printIp = 2;
+    // 是否打印小票
+    int32 enablePrint = 3;
+}
+
+//绑定桌台应答
+message BindTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+        RepeatIp = 2;
+        RepeatTable = 3;
+        //ip格式错误
+        ErrorIp = 4;
+    }
+    Code result = 1;
+}
+
+//取消绑定桌台请求
+message UnBindTableRequest {
+    //账号
+    string account = 0;
+    //桌台ID
+    int32 tableId = 1;
+}
+
+//取消绑定桌台请求
+message UnBindTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 1;
+}
+
+//修改绑定的桌台请求
+message ModifyBindTableRequest {
+    //账号
+    string account = 0;
+    //原桌台ID
+    int32 oldTableId = 1;
+    //新桌台ID
+    int32 newTableId = 2;
+    //打印机IP
+    string printIp = 3;
+    // 是否打印小票
+    int32 enablePrint = 4;
+}
+
+//修改绑定的桌台请求
+message ModifyBindTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+        RepeatIp = 2;
+        //ip格式错误
+        ErrorIp = 3;
+    }
+    Code result = 1;
+}
+
+// 更新桌台自动获取状态
+
+message UpdateTableAutoRequest {
+    //账号
+    string account = 0;
+    //桌台ID
+    int32 tableId = 1;
+    //自动获取状态 1 自动 2 手动
+    int32 autoRecieve = 2;
+}
+
+message UpdateTableAutoReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+     //桌台ID
+    int32 tableId = 1;
+    //自动获取状态 1 自动 2 手动
+    int32 autoRecieve = 2;
+}
+
+// 修改对比时间
+message UpdateCompareTimeRequest {
+    //操作者账号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    // 第1次对比时间
+    int32 resultTimeOne = 2;
+    // 第2次对比时间
+    int32 resultTimeTwo = 3;
+    // 第3次对比时间
+    int32 resultTimeThree = 4;
+}
+// 修改对比时间
+message UpdateCompareTimeReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    //结果
+    Code result = 0;
+     // 第1次对比时间
+    int32 resultTimeOne = 1;
+    // 第2次对比时间
+    int32 resultTimeTwo = 2;
+    // 第3次对比时间
+    int32 resultTimeThree = 3;
+}
+
+// 更新桌台打印状态
+message UpdateTablePrintStatusRequest {
+    //账号
+    string account = 0;
+    //桌台ID
+    int32 tableId = 1;
+    //桌台打印状态 0 不打印 1 打印
+    int32 enablePrint = 2;
+}
+
+message UpdateTablePrintStatusReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+     //桌台ID
+    int32 tableId = 1;
+    //桌台打印状态 0 不打印 1 打印
+    int32 enablePrint = 2;
+}
+
+// 桌台数据获取
+message RpcTableDataRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //游戏ID
+    string gameId = 1;
+    //第几次获取
+    int32 frequency = 2;
+}
+message RpcTableDataReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    //结果
+    Code result = 0;
+}
+//验证小票机ip是否可用
+message ValidatePrinterIpRequest {
+    //小票机ip
+    string printerIp = 0;
+}
+
+//验证小票机ip是否可用
+message ValidatePrinterIpReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 1;
+}

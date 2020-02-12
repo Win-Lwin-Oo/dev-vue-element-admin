@@ -1,0 +1,897 @@
+syntax = "proto3";
+package subGame;
+
+
+// ***************************  百家乐 Start  ***********************
+//押注类型
+enum BaiJiaLeBetType {
+    None = 0;   //无效
+    Z = 1;  //庄
+    X = 2;  //闲
+    H = 3;  //和
+    ZD = 4; //庄对
+    XD = 5; //闲对
+}
+
+//百家乐扩展押注类型
+enum BaiJiaLeExtraBetType {
+    AnyDouble = 6;        //任意对子
+    PerfectDouble = 7;      //完美对子
+    ZLongBao = 8;       //庄龙宝
+    XLongBao = 9;         //闲龙宝
+    Big = 10;       //大
+    Small = 11;     //小
+    SuperSix = 12;      //超级六
+}
+
+//结果类型
+enum BaiJiaLeResultType {
+    None = 0;   //无效
+    Z = 10;     //庄赢
+    ZZD = 11;  //庄赢庄对
+    ZXD = 12;  //庄赢闲对
+    ZZXD = 13; //庄赢庄闲对
+    X = 20;     //闲赢
+    XZD = 21;  //闲赢庄对
+    XXD = 22;  //闲赢闲对
+    XZXD = 23; //闲赢庄闲对
+    H = 30;     //和
+    HZD = 31;  //和庄对
+    HXD = 32;  //和闲对
+    HZXD = 33; //和庄闲对
+}
+
+//大小
+enum ResultBigSmall {
+    None = 0;       //没有
+    Big = 1;        //大
+    Small = 2;      //小
+}
+
+//任意对子
+enum ResultAnyDouble {
+    None = 0;       //没有
+    AnyDouble = 1;       //任意对子
+}
+
+//完美对子
+enum ResultPerfectDouble {
+    None = 0;       //没有
+    PerfectDouble = 1;      //完美对子
+}
+
+//龙宝
+enum ResultLongBao {
+    None = 0;       //没有
+    ZLongBao = 1;        //庄龙宝
+    XLongBao = 2;       //闲龙宝
+}
+
+//超级六
+enum ResultSuperSix {
+    None = 0;       //没有
+    SuperSix = 1;      //超级六
+}
+
+//彩池数据
+message BaiJiaLePoolInfo {
+    //庄押注额
+    int32 coinZ = 0;
+    //闲押注额
+    int32 coinX = 1;
+    //和局押注额
+    int32 coinH = 2;
+    //庄对押注额
+    int32 coinZd = 3;
+    //闲对押注额
+    int32 coinXd = 4;
+    //大押注额
+    int32 coinBig = 5;
+    //小押注额
+    int32 coinSmall = 6;
+    //任意对子押注额
+    int32 coinAnyDouble = 7;
+    //完美对子押注额
+    int32 coinPerfectDouble = 8;
+    //庄龙宝押注额
+    int32 coinZLongBao = 9;
+    //闲龙宝押注额
+    int32 coinXLongBao = 10;
+    //超级6押注额
+    int32 coinSuperSix = 11;
+}
+
+//用户押注数据
+message BaiJiaLeMemberCoinInfo {
+    //用户庄押注额
+    int32 memberCoinZ = 0;
+    //用户闲押注额
+    int32 memberCoinX = 1;
+    //用户和押注额
+    int32 memberCoinH = 2;
+    //用户庄对押注额
+    int32 memberCoinZd = 3;
+    //用户闲对押注额
+    int32 memberCoinXd = 4;
+    //用户大押注额
+    int32 memberCoinBig = 5;
+    //用户小押注额
+    int32 memberCoinSmall = 6;
+    //用户任意对子押注额
+    int32 memberCoinAnyDouble = 7;
+    //用户完美对子押注额
+    int32 memberCoinPerfectDouble = 8;
+    //用户庄龙宝押注额
+    int32 memberCoinZLongBao = 9;
+    //用户闲龙宝押注额
+    int32 memberCoinXLongBao = 10;
+    //用户超级6押注额
+    int32 memberCoinSuperSix = 11;
+}
+
+// *************************  百家乐 End  *************************
+
+
+// *************************  龙虎斗 Start  ************************
+//押注类型
+enum LongHuDouBetType {
+    None = 0;   //无效
+    Z = 1;  //虎
+    X = 2;  //龙
+    H = 3;  //和
+}
+
+//龙虎斗扩展押注类型
+enum LongHuDouExtraBetType {
+    LongSingle = 4;       //龙单
+    LongDouble = 5;       //龙双
+    LongRed = 6;       //龙红
+    LongBlack = 7;        //龙黑
+    HuSingle = 8;      //虎单
+    HuDouble = 9;       //虎双
+    HuRed = 10;        //虎红
+    HuBlack = 11;     //虎黑
+}
+
+//结果类型
+enum LongHuDouResultType {
+    None = 0;   //无效
+    Z = 10;     //虎赢
+    X = 20;     //龙赢
+    H = 30;     //和
+}
+
+//单双
+enum ResultDanShuang {
+    None = 0;       //没有
+    Single = 1;        //单
+    Double = 2;     //双
+}
+
+//红黑
+enum ResultHongHei {
+    None = 0;       //没有
+    Red = 1;       //红
+    Black = 2;        //黑
+}
+
+//彩池数据
+message LongHuDouPoolInfo {
+    //虎押注额
+    int32 coinZ = 0;
+    //龙押注额
+    int32 coinX = 1;
+    //和局押注额
+    int32 coinH = 2;
+    //龙单押注额
+    int32 coinLongSingle = 3;
+    //龙双押注额
+    int32 coinLongDouble = 4;
+    //龙红押注额
+    int32 coinLongRed = 5;
+    //龙黑押注额
+    int32 coinLongBlack = 6;
+    //虎单押注额
+    int32 coinHuSingle = 7;
+    //虎双押注额
+    int32 coinHuDouble = 8;
+    //虎红押注额
+    int32 coinHuRed = 9;
+    //虎黑押注额
+    int32 coinHuBlack = 10;
+}
+
+//用户押注数据
+message LongHuDouMemberCoinInfo {
+    //用户虎押注额
+    int32 memberCoinZ = 0;
+    //用户龙押注额
+    int32 memberCoinX = 1;
+    //用户和押注额
+    int32 memberCoinH = 2;
+    //用户龙单押注额
+    int32 memberCoinLongSingle = 3;
+    //用户龙双押注额
+    int32 memberCoinLongDouble = 4;
+    //用户龙红押注额
+    int32 memberCoinLongRed = 5;
+    //用户龙黑押注额
+    int32 memberCoinLongBlack = 6;
+    //用户虎单押注额
+    int32 memberCoinHuSingle = 7;
+    //用户虎双押注额
+    int32 memberCoinHuDouble = 8;
+    //用户虎红押注额
+    int32 memberCoinHuRed = 9;
+    //用户虎黑押注额
+    int32 memberCoinHuBlack = 10;
+}
+
+// ********************** 龙虎斗 End *************************
+
+// ********************** 牛牛 Start  *************************
+// 牛牛押注类型
+enum NiuNiuBetType {
+    None = 0;   //无效
+    Xian1Ping = 1;
+    Xian1Fan = 2;
+    Xian2Ping = 3;
+    Xian2Fan = 4;
+    Xian3Ping = 5;
+    Xian3Fan = 6;
+}
+
+// 牛牛彩池数据
+message NiuNiuPoolInfo {
+    //牛牛 闲1平
+    int32 coinXian1Ping = 0;
+    //牛牛 闲1翻
+    int32 coinXian1Fan = 1;
+    //牛牛 闲2平
+    int32 coinXian2Ping = 2;
+    //牛牛 闲2翻
+    int32 coinXian2Fan = 3;
+    //牛牛 闲3平
+    int32 coinXian3Ping = 4;
+    //牛牛 闲3翻
+    int32 coinXian3Fan = 5;
+}
+
+// 牛牛用户下注数据
+message NiuNiuMemberCoinInfo {
+    //牛牛 用户押注额 闲1平
+    int32 memberCoinXian1Ping = 0;
+    //牛牛 用户押注额 闲1翻
+    int32 memberCoinXian1Fan = 1;
+    //牛牛 用户押注额 闲2平
+    int32 memberCoinXian2Ping = 2;
+    //牛牛 用户押注额 闲2翻
+    int32 memberCoinXian2Fan = 3;
+    //牛牛 用户押注额 闲3平
+    int32 memberCoinXian3Ping = 4;
+    //牛牛 用户押注额 闲3翻
+    int32 memberCoinXian3Fan = 5;
+}
+// ********************** 牛牛 End    *************************
+
+// ********************** 骰宝 Start *************************
+//骰宝投注类型
+enum TouBaoBetType {
+    None = 0;   //无效
+    DanTou1 = 1;    //单骰1
+    DanTou2 = 2;    //单骰2
+    DanTou3 = 3;    //单骰3
+    DanTou4 = 4;    //单骰4
+    DanTou5 = 5;    //单骰5
+    DanTou6 = 6;    //单骰6
+    PaiJiu56 = 7;   //牌九56
+    PaiJiu46 = 8;   //牌九46
+    PaiJiu45 = 9;   //牌九45
+    PaiJiu36 = 10;   //牌九36
+    PaiJiu35 = 11;   //牌九35
+    PaiJiu34 = 12;   //牌九34
+    PaiJiu26 = 13;   //牌九26
+    PaiJiu25 = 14;   //牌九25
+    PaiJiu24 = 15;   //牌九24
+    PaiJiu23 = 16;   //牌九23
+    PaiJiu16 = 17;   //牌九16
+    PaiJiu15 = 18;   //牌九15
+    PaiJiu14 = 19;   //牌九14
+    PaiJiu13 = 20;   //牌九13
+    PaiJiu12 = 21;   //牌九12
+    ZongHe4 = 22;   //总和4
+    ZongHe5 = 23;   //总和5
+    ZongHe6 = 24;   //总和6
+    ZongHe7 = 25;   //总和7
+    ZongHe8 = 26;   //总和8
+    ZongHe9 = 27;   //总和9
+    ZongHe10 = 28;   //总和10
+    ZongHe11 = 29;   //总和11
+    ZongHe12 = 30;   //总和12
+    ZongHe13 = 31;   //总和13
+    ZongHe14 = 32;   //总和14
+    ZongHe15 = 33;   //总和15
+    ZongHe16 = 34;   //总和16
+    ZongHe17 = 35;   //总和17
+    DuiZi1 = 36;   //对子1
+    DuiZi2 = 37;   //对子2
+    DuiZi3 = 38;   //对子3
+    DuiZi4 = 39;   //对子4
+    DuiZi5 = 40;   //对子5
+    DuiZi6 = 41;   //对子6
+    WeiTou1 = 42;    //围骰1
+    WeiTou2 = 43;    //围骰2
+    WeiTou3 = 44;    //围骰3
+    WeiTou4 = 45;    //围骰4
+    WeiTou5 = 46;    //围骰5
+    WeiTou6 = 47;    //围骰6
+    QuanWei = 48;       //全围
+    TouDa = 49;    //大
+    TouXiao = 50;  //小
+    TouDan = 51;   //单
+    TouShuang = 52;    //双
+}
+
+//大小
+enum ResultTouBaoDaXiao {
+    None = 0;   //没有
+    Da = 1;     //大
+    Xiao = 2;   //小
+}
+//单双
+enum ResultTouBaoDanShuang {
+    None = 0;   //没有
+    Dan = 1;    //单
+    Shuang = 2; //双
+}
+
+//全围
+enum ResultTouBaoQuanWei {
+    None = 0;   //无围
+    Wei1 = 1;   //围1
+    Wei2 = 2;   //围2
+    Wei3 = 3;   //围3
+    Wei4 = 4;   //围4
+    Wei5 = 5;   //围5
+    Wei6 = 6;   //围6
+}
+
+// 骰宝彩池数据
+message TouBaoPoolInfo {
+    //单
+    int32 coinTouDan = 0;
+    //双
+    int32 coinTouShuang = 1;
+    //大
+    int32 coinTouDa = 2;
+    //小
+    int32 coinTouXiao = 3;
+    //单点
+    int32 coinDanDian = 4;
+    //对子
+    int32 coinDuiZi = 5;
+    //牌九
+    int32 coinPaiJiu = 6;
+    //全围
+    int32 coinQuanWei = 7;
+    //围骰
+    int32 coinWeiTou = 8;
+    //和值
+    int32 coinZongHe = 9;
+}
+
+// 骰宝用户下注数据
+message TouBaoMemberCoinInfo {
+    //骰宝 用户押注额 单骰1
+    int32 memberCoinDanTou1 = 0;
+    //骰宝 用户押注额 单骰2
+    int32 memberCoinDanTou2 = 1;
+    //骰宝 用户押注额 单骰3
+    int32 memberCoinDanTou3 = 2;
+    //骰宝 用户押注额 单骰4
+    int32 memberCoinDanTou4 = 3;
+    //骰宝 用户押注额 单骰5
+    int32 memberCoinDanTou5 = 4;
+    //骰宝 用户押注额 单骰6
+    int32 memberCoinDanTou6 = 5;
+    //骰宝 用户押注额 牌九56
+    int32 memberCoinPaiJiu56 = 6;
+    //骰宝 用户押注额 牌九46
+    int32 memberCoinPaiJiu46 = 7;
+    //骰宝 用户押注额 牌九45
+    int32 memberCoinPaiJiu45 = 8;
+    //骰宝 用户押注额 牌九36
+    int32 memberCoinPaiJiu36 = 9;
+    //骰宝 用户押注额 牌九35
+    int32 memberCoinPaiJiu35 = 10;
+    //骰宝 用户押注额 牌九34
+    int32 memberCoinPaiJiu34 = 11;
+    //骰宝 用户押注额 牌九26
+    int32 memberCoinPaiJiu26 = 12;
+    //骰宝 用户押注额 牌九25
+    int32 memberCoinPaiJiu25 = 13;
+    //骰宝 用户押注额 牌九24
+    int32 memberCoinPaiJiu24 = 14;
+    //骰宝 用户押注额 牌九23
+    int32 memberCoinPaiJiu23 = 15;
+    //骰宝 用户押注额 牌九16
+    int32 memberCoinPaiJiu16 = 16;
+    //骰宝 用户押注额 牌九15
+    int32 memberCoinPaiJiu15 = 17;
+    //骰宝 用户押注额 牌九14
+    int32 memberCoinPaiJiu14 = 18;
+    //骰宝 用户押注额 牌九13
+    int32 memberCoinPaiJiu13 = 19;
+    //骰宝 用户押注额 牌九12
+    int32 memberCoinPaiJiu12 = 20;
+    //骰宝 用户押注额 点数总和17
+    int32 memberCoinZongHe17 = 21;
+    //骰宝 用户押注额 点数总和16
+    int32 memberCoinZongHe16 = 22;
+    //骰宝 用户押注额 点数总和15
+    int32 memberCoinZongHe15 = 23;
+    //骰宝 用户押注额 点数总和14
+    int32 memberCoinZongHe14 = 24;
+    //骰宝 用户押注额 点数总和13
+    int32 memberCoinZongHe13 = 25;
+    //骰宝 用户押注额 点数总和12
+    int32 memberCoinZongHe12 = 26;
+    //骰宝 用户押注额 点数总和11
+    int32 memberCoinZongHe11 = 27;
+    //骰宝 用户押注额 点数总和10
+    int32 memberCoinZongHe10 = 28;
+    //骰宝 用户押注额 点数总和9
+    int32 memberCoinZongHe9 = 29;
+    //骰宝 用户押注额 点数总和8
+    int32 memberCoinZongHe8 = 30;
+    //骰宝 用户押注额 点数总和7
+    int32 memberCoinZongHe7 = 31;
+    //骰宝 用户押注额 点数总和6
+    int32 memberCoinZongHe6 = 32;
+    //骰宝 用户押注额 点数总和5
+    int32 memberCoinZongHe5 = 33;
+    //骰宝 用户押注额 点数总和4
+    int32 memberCoinZongHe4 = 34;
+    //骰宝 用户押注额 对子6
+    int32 memberCoinDuiZi6 = 35;
+    //骰宝 用户押注额 对子5
+    int32 memberCoinDuiZi5 = 36;
+    //骰宝 用户押注额 对子4
+    int32 memberCoinDuiZi4 = 37;
+    //骰宝 用户押注额 对子3
+    int32 memberCoinDuiZi3 = 38;
+    //骰宝 用户押注额 对子2
+    int32 memberCoinDuiZi2 = 39;
+    //骰宝 用户押注额 对子1
+    int32 memberCoinDuiZi1 = 40;
+    //骰宝 用户押注额 围骰6
+    int32 memberCoinWeiTou6 = 41;
+    //骰宝 用户押注额 围骰5
+    int32 memberCoinWeiTou5 = 42;
+    //骰宝 用户押注额 围骰4
+    int32 memberCoinWeiTou4 = 43;
+    //骰宝 用户押注额 围骰3
+    int32 memberCoinWeiTou3 = 44;
+    //骰宝 用户押注额 围骰2
+    int32 memberCoinWeiTou2 = 45;
+    //骰宝 用户押注额 围骰1
+    int32 memberCoinWeiTou1 = 46;
+    //骰宝 用户押注额 全围
+    int32 memberCoinQuanWei = 47;
+    //骰宝 用户押注额 大
+    int32 memberCoinTouDa = 48;
+    //骰宝 用户押注额 小
+    int32 memberCoinTouXiao = 49;
+    //骰宝 用户押注额 单
+    int32 memberCoinTouDan = 50;
+    //骰宝 用户押注额 双
+    int32 memberCoinTouShuang = 51;
+}
+// **************************  骰宝 End  ****************************
+
+// **************************  轮盘 Start  **************************
+// 轮盘押注类型
+enum LunPanBetType {
+    None = 0;   //无效
+    Zhi0 = 1; //直注0
+    Zhi1 = 2; //直注1
+    Zhi2 = 3; //直注2
+    Zhi3 = 4; //直注3
+    Zhi4 = 5; //直注4
+    Zhi5 = 6; //直注5
+    Zhi6 = 7; //直注6
+    Zhi7 = 8; //直注7
+    Zhi8 = 9; //直注8
+    Zhi9 = 10; //直注9
+    Zhi10 = 11; //直注10
+    Zhi11 = 12; //直注11
+    Zhi12 = 13; //直注12
+    Zhi13 = 14; //直注13
+    Zhi14 = 15; //直注14
+    Zhi15 = 16; //直注15
+    Zhi16 = 17; //直注16
+    Zhi17 = 18; //直注17
+    Zhi18 = 19; //直注18
+    Zhi19 = 20; //直注19
+    Zhi20 = 21; //直注20
+    Zhi21 = 22; //直注21
+    Zhi22 = 23; //直注22
+    Zhi23 = 24; //直注23
+    Zhi24 = 25; //直注24
+    Zhi25 = 26; //直注25
+    Zhi26 = 27; //直注26
+    Zhi27 = 28; //直注27
+    Zhi28 = 29; //直注28
+    Zhi29 = 30; //直注29
+    Zhi30 = 31; //直注30
+    Zhi31 = 32; //直注31
+    Zhi32 = 33; //直注32
+    Zhi33 = 34; //直注33
+    Zhi34 = 35; //直注34
+    Zhi35 = 36; //直注35
+    Zhi36 = 37; //直注36
+    Fen1 = 38;  //分注 0/1
+    Fen2 = 39;  //分注 0/2
+    Fen3 = 40;  //分注 0/3
+    Fen4 = 41; // 分注 1/2
+    Fen5 = 42; // 分注 2/3
+    Fen6 = 43; // 分注 1/4
+    Fen7 = 44; // 分注 2/5
+    Fen8 = 45; // 分注 3/6
+    Fen9 = 46; // 分注 4/5
+    Fen10 = 47; // 分注 5/6
+    Fen11 = 48; // 分注 4/7
+    Fen12 = 49; // 分注 5/8
+    Fen13 = 50; // 分注 6/9
+    Fen14 = 51; // 分注 7/8
+    Fen15 = 52; // 分注 8/9
+    Fen16 = 53; // 分注 7/10
+    Fen17 = 54; // 分注 8/11
+    Fen18 = 55; // 分注 9/12
+    Fen19 = 56; // 分注 10/11
+    Fen20 = 57; // 分注 11/12
+    Fen21 = 58; // 分注 10/13
+    Fen22 = 59; // 分注 11/14
+    Fen23 = 60; // 分注 12/15
+    Fen24 = 61; // 分注 13/14
+    Fen25 = 62; // 分注 14/15
+    Fen26 = 63; // 分注 13/16
+    Fen27 = 64; // 分注 14/17
+    Fen28 = 65; // 分注 15/18
+    Fen29 = 66; // 分注 16/17
+    Fen30 = 67; // 分注 17/18
+    Fen31 = 68; // 分注 16/19
+    Fen32 = 69; // 分注 17/20
+    Fen33 = 70; // 分注 18/21
+    Fen34 = 71; // 分注 19/20
+    Fen35 = 72; // 分注 20/21
+    Fen36 = 73; // 分注 19/22
+    Fen37 = 74; // 分注 20/23
+    Fen38 = 75; // 分注 21/24
+    Fen39 = 76; // 分注 22/23
+    Fen40 = 77; // 分注 23/24
+    Fen41 = 78; // 分注 22/25
+    Fen42 = 79; // 分注 23/26
+    Fen43 = 80; // 分注 24/27
+    Fen44 = 81; // 分注 25/26
+    Fen45 = 82; // 分注 26/27
+    Fen46 = 83; // 分注 25/28
+    Fen47 = 84; // 分注 26/29
+    Fen48 = 85; // 分注 27/30
+    Fen49 = 86; // 分注 28/29
+    Fen50 = 87; // 分注 29/30
+    Fen51 = 88; // 分注 28/31
+    Fen52 = 89; // 分注 29/32
+    Fen53 = 90; // 分注 30/33
+    Fen54 = 91; // 分注 31/32
+    Fen55 = 92; // 分注 32/33
+    Fen56 = 93; // 分注 31/34
+    Fen57 = 94; // 分注 32/35
+    Fen58 = 95; // 分注 33/36
+    Fen59 = 96; // 分注 34/35
+    Fen60 = 97; // 分注 35/36
+    SanShu1 = 98; // 三数（0 1 2）
+    SanShu2 = 99; // 三数（0 2 3）
+    SiShu = 100; // 四数 (0 1 2 3) 
+    JieZhu1 = 101; // 街注（1 2 3）
+    JieZhu2 = 102; // 街注（4 5 6）
+    JieZhu3 = 103; // 街注（7 8 9）
+    JieZhu4 = 104; // 街注（10 11 12）
+    JieZhu5 = 105; // 街注（13 14 15）
+    JieZhu6 = 106; // 街注（16 17 18）
+    JieZhu7 = 107; // 街注（19 20 21）
+    JieZhu8 = 108; // 街注（22 23 24）
+    JieZhu9 = 109; // 街注（25 26 27）
+    JieZhu10 = 110; // 街注（28 29 30）
+    JieZhu11 = 111; // 街注（31 32 33）
+    JieZhu12 = 112; // 街注（34 35 36）
+    XianZhu1 = 113; // 线注 (1 2 3 4 5 6)
+    XianZhu2 = 114; // 线注 (4 5 6 7 8 9)
+    XianZhu3 = 115; // 线注 (7 8 9 10 11 12)
+    XianZhu4 = 116; // 线注 (10 11 12 13 14 15)
+    XianZhu5 = 117; // 线注 (13 14 15 16 17 18)
+    XianZhu6 = 118; // 线注 (16 17 18 19 20 21)
+    XianZhu7 = 119; // 线注 (19 20 21 22 23 24)
+    XianZhu8 = 120; // 线注 (22 23 24 25 26 27)
+    XianZhu9 = 121; // 线注 (25 26 27 28 29 30)
+    XianZhu10 = 122; // 线注 (28 29 30 31 32 33)
+    XianZhu11 = 123; // 线注 (31 32 33 34 35 36)
+    JiaoZhu1 = 124; // 角注（1 2 4 5）
+    JiaoZhu2 = 125; // 角注（2 3 5 6）
+    JiaoZhu3 = 126; // 角注（4 5 7 8）
+    JiaoZhu4 = 127; // 角注（5 6 8 9）
+    JiaoZhu5 = 128; // 角注（7 8 10 11）
+    JiaoZhu6 = 129; // 角注（8 9 11 12）
+    JiaoZhu7 = 130; // 角注（10 11 13 14）
+    JiaoZhu8 = 131; // 角注（11 12 14 15）
+    JiaoZhu9 = 132; // 角注（13 14 16 17）
+    JiaoZhu10 = 133; // 角注（14 15 17 18）
+    JiaoZhu11 = 134; // 角注（16 17 19 20）
+    JiaoZhu12 = 135; // 角注（17 18 20 21）
+    JiaoZhu13 = 136; // 角注（19 20 22 23）
+    JiaoZhu14 = 137; // 角注（20 21 23 24）
+    JiaoZhu15 = 138; // 角注（22 23 25 26）
+    JiaoZhu16 = 139; // 角注（23 24 26 27）
+    JiaoZhu17 = 140; // 角注（25 26 28 29）
+    JiaoZhu18 = 141; // 角注（26 27 29 30）
+    JiaoZhu19 = 142; // 角注（28 29 31 32）
+    JiaoZhu20 = 143; // 角注（29 30 32 33）
+    JiaoZhu21 = 144; // 角注（31 32 34 35）
+    JiaoZhu22 = 145; // 角注（32 33 35 36）
+    Da1 = 146; // 单项押注 第一打
+    Da2 = 147; // 单项押注 第二打
+    Da3 = 148; // 单项押注 第三打
+    Lie1 = 149; // 单项押注 第一列
+    Lie2 = 150; // 单项押注 第二列
+    Lie3 = 151; // 单项押注 第三列
+    Da = 152; // 单项押注 大
+    Xiao = 153; // 单项押注 小
+    Dan = 154; // 单项押注 单
+    Shuang = 155; // 单项押注 双
+    Hong = 156; // 单项押注 红
+    Hei = 157; // 单项押注 黑
+}
+
+/*******************************轮盘结果*******************************/
+//大小
+enum ResultLunPanDaXiao {
+    None = 0;   //没有
+    Da = 1;     //大
+    Xiao = 2;   //小
+}
+//单双
+enum ResultLunPanDanShuang {
+    None = 0;   //没有
+    Dan = 1;    //单
+    Shuang = 2; //双
+}
+
+//红黑
+enum ResultLunPanHongHei {
+    None = 0;   //没有
+    Hong = 1;   //红
+    Hei = 2;    //黑
+}
+
+//第几打
+enum ResultLunPanDa {
+    None = 0;   //没有
+    Da1 = 1;    //第一打
+    Da2 = 2;    //第二打
+    Da3 = 3;    //第三打
+}
+
+//第几列
+enum ResultLunPanLie {
+    None = 0;   //没有
+    Lie1 = 1;   //第一列
+    Lie2 = 2;   //第二列
+    Lie3 = 3;   //第三列
+}
+/**************************************************************/
+
+//轮盘彩池数据
+message LunPanPoolInfo {
+    //单
+    int32 coinDan = 0;
+    //双
+    int32 coinShuang = 1;
+    //大
+    int32 coinDa = 2;
+    //小
+    int32 coinXiao = 3;
+    //红
+    int32 coinHong = 4;
+    //黑
+    int32 coinHei = 5;
+    //零
+    int32 coinZero = 6;
+    //管理端彩池数据
+    //直接注
+    int32 coinZhiJie = 7;
+    //分注
+    int32 coinFenZhu = 8;
+    //街注
+    int32 coinJieZhu = 9;
+    //三数
+    int32 coinSanShu = 10;
+    //角注
+    int32 coinJiaoZhu = 11;
+    //四个号码
+    int32 coinSiShu = 12;
+    //线注
+    int32 coinLine = 13;
+    //列注
+    int32 coinLie123 = 14;
+    //下注一打
+    int32 coinDa123 = 15;
+    //红黑
+    int32 coinHongHei = 16;
+    //单双
+    int32 coinDanShuang = 17;
+    //大小
+    int32 coinDaXiao = 18;
+}
+
+//轮盘用户下注金额
+message LunPanMemberCoinInfo {
+    int32 memberCoinZhi0 = 1; //直注0
+    int32 memberCoinZhi1 = 2; //直注1
+    int32 memberCoinZhi2 = 3; //直注2
+    int32 memberCoinZhi3 = 4; //直注3
+    int32 memberCoinZhi4 = 5; //直注4
+    int32 memberCoinZhi5 = 6; //直注5
+    int32 memberCoinZhi6 = 7; //直注6
+    int32 memberCoinZhi7 = 8; //直注7
+    int32 memberCoinZhi8 = 9; //直注8
+    int32 memberCoinZhi9 = 10; //直注9
+    int32 memberCoinZhi10 = 11; //直注10
+    int32 memberCoinZhi11 = 12; //直注11
+    int32 memberCoinZhi12 = 13; //直注12
+    int32 memberCoinZhi13 = 14; //直注13
+    int32 memberCoinZhi14 = 15; //直注14
+    int32 memberCoinZhi15 = 16; //直注15
+    int32 memberCoinZhi16 = 17; //直注16
+    int32 memberCoinZhi17 = 18; //直注17
+    int32 memberCoinZhi18 = 19; //直注18
+    int32 memberCoinZhi19 = 20; //直注19
+    int32 memberCoinZhi20 = 21; //直注20
+    int32 memberCoinZhi21 = 22; //直注21
+    int32 memberCoinZhi22 = 23; //直注22
+    int32 memberCoinZhi23 = 24; //直注23
+    int32 memberCoinZhi24 = 25; //直注24
+    int32 memberCoinZhi25 = 26; //直注25
+    int32 memberCoinZhi26 = 27; //直注26
+    int32 memberCoinZhi27 = 28; //直注27
+    int32 memberCoinZhi28 = 29; //直注28
+    int32 memberCoinZhi29 = 30; //直注29
+    int32 memberCoinZhi30 = 31; //直注30
+    int32 memberCoinZhi31 = 32; //直注31
+    int32 memberCoinZhi32 = 33; //直注32
+    int32 memberCoinZhi33 = 34; //直注33
+    int32 memberCoinZhi34 = 35; //直注34
+    int32 memberCoinZhi35 = 36; //直注35
+    int32 memberCoinZhi36 = 37; //直注36
+    int32 memberCoinFen1 = 38;  //分注 0/1
+    int32 memberCoinFen2 = 39;  //分注 0/2
+    int32 memberCoinFen3 = 40;  //分注 0/3
+    int32 memberCoinFen4 = 41; // 分注 1/2
+    int32 memberCoinFen5 = 42; // 分注 2/3
+    int32 memberCoinFen6 = 43; // 分注 1/4
+    int32 memberCoinFen7 = 44; // 分注 2/5
+    int32 memberCoinFen8 = 45; // 分注 3/6
+    int32 memberCoinFen9 = 46; // 分注 4/5
+    int32 memberCoinFen10 = 47; // 分注 5/6
+    int32 memberCoinFen11 = 48; // 分注 4/7
+    int32 memberCoinFen12 = 49; // 分注 5/8
+    int32 memberCoinFen13 = 50; // 分注 6/9
+    int32 memberCoinFen14 = 51; // 分注 7/8
+    int32 memberCoinFen15 = 52; // 分注 8/9
+    int32 memberCoinFen16 = 53; // 分注 7/10
+    int32 memberCoinFen17 = 54; // 分注 8/11
+    int32 memberCoinFen18 = 55; // 分注 9/12
+    int32 memberCoinFen19 = 56; // 分注 10/11
+    int32 memberCoinFen20 = 57; // 分注 11/12
+    int32 memberCoinFen21 = 58; // 分注 10/13
+    int32 memberCoinFen22 = 59; // 分注 11/14
+    int32 memberCoinFen23 = 60; // 分注 12/15
+    int32 memberCoinFen24 = 61; // 分注 13/14
+    int32 memberCoinFen25 = 62; // 分注 14/15
+    int32 memberCoinFen26 = 63; // 分注 13/16
+    int32 memberCoinFen27 = 64; // 分注 14/17
+    int32 memberCoinFen28 = 65; // 分注 15/18
+    int32 memberCoinFen29 = 66; // 分注 16/17
+    int32 memberCoinFen30 = 67; // 分注 17/18
+    int32 memberCoinFen31 = 68; // 分注 16/19
+    int32 memberCoinFen32 = 69; // 分注 17/20
+    int32 memberCoinFen33 = 70; // 分注 18/21
+    int32 memberCoinFen34 = 71; // 分注 19/20
+    int32 memberCoinFen35 = 72; // 分注 20/21
+    int32 memberCoinFen36 = 73; // 分注 19/22
+    int32 memberCoinFen37 = 74; // 分注 20/23
+    int32 memberCoinFen38 = 75; // 分注 21/24
+    int32 memberCoinFen39 = 76; // 分注 22/23
+    int32 memberCoinFen40 = 77; // 分注 23/24
+    int32 memberCoinFen41 = 78; // 分注 22/25
+    int32 memberCoinFen42 = 79; // 分注 23/26
+    int32 memberCoinFen43 = 80; // 分注 24/27
+    int32 memberCoinFen44 = 81; // 分注 25/26
+    int32 memberCoinFen45 = 82; // 分注 26/27
+    int32 memberCoinFen46 = 83; // 分注 25/28
+    int32 memberCoinFen47 = 84; // 分注 26/29
+    int32 memberCoinFen48 = 85; // 分注 27/30
+    int32 memberCoinFen49 = 86; // 分注 28/29
+    int32 memberCoinFen50 = 87; // 分注 29/30
+    int32 memberCoinFen51 = 88; // 分注 28/31
+    int32 memberCoinFen52 = 89; // 分注 29/32
+    int32 memberCoinFen53 = 90; // 分注 30/33
+    int32 memberCoinFen54 = 91; // 分注 31/32
+    int32 memberCoinFen55 = 92; // 分注 32/33
+    int32 memberCoinFen56 = 93; // 分注 31/34
+    int32 memberCoinFen57 = 94; // 分注 32/35
+    int32 memberCoinFen58 = 95; // 分注 33/36
+    int32 memberCoinFen59 = 96; // 分注 34/35
+    int32 memberCoinFen60 = 97; // 分注 35/36
+    int32 memberCoinSanShu1 = 98; // 三数（0 1 2）
+    int32 memberCoinSanShu2 = 99; // 三数（0 2 3）
+    int32 memberCoinSiShu = 100; // 四数 (0 1 2 3) 
+    int32 memberCoinJieZhu1 = 101; // 街注（1 2 3）
+    int32 memberCoinJieZhu2 = 102; // 街注（4 5 6）
+    int32 memberCoinJieZhu3 = 103; // 街注（7 8 9）
+    int32 memberCoinJieZhu4 = 104; // 街注（10 11 12）
+    int32 memberCoinJieZhu5 = 105; // 街注（13 14 15）
+    int32 memberCoinJieZhu6 = 106; // 街注（16 17 18）
+    int32 memberCoinJieZhu7 = 107; // 街注（19 20 21）
+    int32 memberCoinJieZhu8 = 108; // 街注（22 23 24）
+    int32 memberCoinJieZhu9 = 109; // 街注（25 26 27）
+    int32 memberCoinJieZhu10 = 110; // 街注（28 29 30）
+    int32 memberCoinJieZhu11 = 111; // 街注（31 32 33）
+    int32 memberCoinJieZhu12 = 112; // 街注（34 35 36）
+    int32 memberCoinXianZhu1 = 113; // 线注 (1 2 3 4 5 6)
+    int32 memberCoinXianZhu2 = 114; // 线注 (4 5 6 7 8 9)
+    int32 memberCoinXianZhu3 = 115; // 线注 (7 8 9 10 11 12)
+    int32 memberCoinXianZhu4 = 116; // 线注 (10 11 12 13 14 15)
+    int32 memberCoinXianZhu5 = 117; // 线注 (13 14 15 16 17 18)
+    int32 memberCoinXianZhu6 = 118; // 线注 (16 17 18 19 20 21)
+    int32 memberCoinXianZhu7 = 119; // 线注 (19 20 21 22 23 24)
+    int32 memberCoinXianZhu8 = 120; // 线注 (22 23 24 25 26 27)
+    int32 memberCoinXianZhu9 = 121; // 线注 (25 26 27 28 29 30)
+    int32 memberCoinXianZhu10 = 122; // 线注 (28 29 30 31 32 33)
+    int32 memberCoinXianZhu11 = 123; // 线注 (31 32 33 34 35 36)
+    int32 memberCoinJiaoZhu1 = 124; // 角注（1 2 4 5）
+    int32 memberCoinJiaoZhu2 = 125; // 角注（2 3 5 6）
+    int32 memberCoinJiaoZhu3 = 126; // 角注（4 5 7 8）
+    int32 memberCoinJiaoZhu4 = 127; // 角注（5 6 8 9）
+    int32 memberCoinJiaoZhu5 = 128; // 角注（7 8 10 11）
+    int32 memberCoinJiaoZhu6 = 129; // 角注（8 9 11 12）
+    int32 memberCoinJiaoZhu7 = 130; // 角注（10 11 13 14）
+    int32 memberCoinJiaoZhu8 = 131; // 角注（11 12 14 15）
+    int32 memberCoinJiaoZhu9 = 132; // 角注（13 14 16 17）
+    int32 memberCoinJiaoZhu10 = 133; // 角注（14 15 17 18）
+    int32 memberCoinJiaoZhu11 = 134; // 角注（16 17 19 20）
+    int32 memberCoinJiaoZhu12 = 135; // 角注（17 18 20 21）
+    int32 memberCoinJiaoZhu13 = 136; // 角注（19 20 22 23）
+    int32 memberCoinJiaoZhu14 = 137; // 角注（20 21 23 24）
+    int32 memberCoinJiaoZhu15 = 138; // 角注（22 23 25 26）
+    int32 memberCoinJiaoZhu16 = 139; // 角注（23 24 26 27）
+    int32 memberCoinJiaoZhu17 = 140; // 角注（25 26 28 29）
+    int32 memberCoinJiaoZhu18 = 141; // 角注（26 27 29 30）
+    int32 memberCoinJiaoZhu19 = 142; // 角注（28 29 31 32）
+    int32 memberCoinJiaoZhu20 = 143; // 角注（29 30 32 33）
+    int32 memberCoinJiaoZhu21 = 144; // 角注（31 32 34 35）
+    int32 memberCoinJiaoZhu22 = 145; // 角注（32 33 35 36）
+    int32 memberCoinDa1 = 146; // 单项押注 第一打
+    int32 memberCoinDa2 = 147; // 单项押注 第二打
+    int32 memberCoinDa3 = 148; // 单项押注 第三打
+    int32 memberCoinLie1 = 149; // 单项押注 第一列
+    int32 memberCoinLie2 = 150; // 单项押注 第二列
+    int32 memberCoinLie3 = 151; // 单项押注 第三列
+    int32 memberCoinDa = 152; // 单项押注 大
+    int32 memberCoinXiao = 153; // 单项押注 小
+    int32 memberCoinDan = 154; // 单项押注 单
+    int32 memberCoinShuang = 155; // 单项押注 双
+    int32 memberCoinHong = 156; // 单项押注 红
+    int32 memberCoinHei = 157; // 单项押注 黑
+}
+
+// **************************  轮盘  End   **************************

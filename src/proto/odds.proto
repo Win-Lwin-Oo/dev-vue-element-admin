@@ -1,0 +1,269 @@
+// table.proto
+
+syntax = "proto3";
+package odds;
+
+//通用赔率基础信息
+message OddsInfo {
+    //id
+    int32 id = 0;
+	//类型
+	int32 type = 1;
+	//庄／虎赔率
+    string oddsZ = 2;
+    //闲／龙赔率
+    string oddsX = 3;
+    //和赔率
+    string oddsH = 4;
+    //庄对赔率
+    string oddsZd = 5;
+    //闲对赔率
+    string oddsXd = 6;
+    // 方案名称
+    string name = 7; 
+    // 福利类型
+    int32 innerType = 8;
+
+    // 牛牛
+    //闲赢无牛赔率
+    string oddsXWinN0 = 9;
+    //闲赢牛1赔率
+    string oddsXWinN1 = 10;
+    //闲赢牛2赔率
+    string oddsXWinN2 = 11;
+    //闲赢牛3赔率
+    string oddsXWinN3 = 12;
+    //闲赢牛4赔率
+    string oddsXWinN4 = 13;
+    //闲赢牛5赔率
+    string oddsXWinN5 = 14;
+    //闲赢牛6赔率
+    string oddsXWinN6 = 15;
+    //闲赢牛7赔率
+    string oddsXWinN7 = 16;
+    //闲赢牛8赔率
+    string oddsXWinN8 = 17;
+    //闲赢牛9赔率
+    string oddsXWinN9 = 18;
+    //闲赢牛牛赔率
+    string oddsXWinNn = 19;
+    //闲赢五公牛赔率
+    string oddsXWinNFive = 20;
+    //闲赢无牛赔率 翻倍
+    string oddsXWinN0Double = 21;
+    //闲赢牛1赔率 翻倍
+    string oddsXWinN1Double = 22;
+    //闲赢牛2赔率 翻倍
+    string oddsXWinN2Double = 23;
+    //闲赢牛3赔率 翻倍
+    string oddsXWinN3Double = 24;
+    //闲赢牛4赔率 翻倍
+    string oddsXWinN4Double = 25;
+    //闲赢牛5赔率 翻倍
+    string oddsXWinN5Double = 26;
+    //闲赢牛6赔率 翻倍
+    string oddsXWinN6Double = 27;
+    //闲赢牛7赔率 翻倍
+    string oddsXWinN7Double = 28;
+    //闲赢牛8赔率 翻倍
+    string oddsXWinN8Double = 29;
+    //闲赢牛9赔率 翻倍
+    string oddsXWinN9Double = 30;
+    //闲赢牛牛赔率 翻倍
+    string oddsXWinNnDouble = 31;
+    //闲赢五公牛赔率 翻倍
+    string oddsXWinNFiveDouble = 32;
+    //闲输无牛赔率
+    string oddsXLoseN0 = 33;
+    //闲输牛1赔率
+    string oddsXLoseN1 = 34;
+    //闲输牛2赔率
+    string oddsXLoseN2 = 35;
+    //闲输牛3赔率
+    string oddsXLoseN3 = 36;
+    //闲输牛4赔率
+    string oddsXLoseN4 = 37;
+    //闲输牛5赔率
+    string oddsXLoseN5 = 38;
+    //闲输牛6赔率
+    string oddsXLoseN6 = 39;
+    //闲输牛7赔率
+    string oddsXLoseN7 = 40;
+    //闲输牛8赔率
+    string oddsXLoseN8 = 41;
+    //闲输牛9赔率
+    string oddsXLoseN9 = 42;
+    //闲输牛牛赔率
+    string oddsXLoseNn = 43;
+    //闲输五公牛赔率
+    string oddsXLoseNFive = 44;
+    //闲输无牛赔率 翻倍
+    string oddsXLoseN0Double = 45;
+    //闲输牛1赔率 翻倍
+    string oddsXLoseN1Double = 46;
+    //闲输牛2赔率 翻倍
+    string oddsXLoseN2Double = 47;
+    //闲输牛3赔率 翻倍
+    string oddsXLoseN3Double = 48;
+    //闲输牛4赔率 翻倍
+    string oddsXLoseN4Double = 49;
+    //闲输牛5赔率 翻倍
+    string oddsXLoseN5Double = 50;
+    //闲输牛6赔率 翻倍
+    string oddsXLoseN6Double = 51;
+    //闲输牛7赔率 翻倍
+    string oddsXLoseN7Double = 52;
+    //闲输牛8赔率 翻倍
+    string oddsXLoseN8Double = 53;
+    //闲输牛9赔率 翻倍
+    string oddsXLoseN9Double = 54;
+    //闲输牛牛赔率 翻倍
+    string oddsXLoseNnDouble = 55;
+    //闲输五公牛赔率 翻倍
+    string oddsXLoseNFiveDouble = 56;
+
+    //新投注项
+    //龙单
+    string longDan = 57; 
+    //龙双
+    string longShuang = 58;
+    //龙红
+    string longHong = 59;
+    //龙黑
+    string longHei = 60;
+    //虎单
+    string huDan = 61;
+    //虎双
+    string huShuang = 62;
+    //虎红
+    string huHong = 63;
+    //虎黑
+    string huHei = 64;
+
+    //任意对子
+    string renYiDui = 65; 
+    //完美对子
+    string wanMeiDui = 66; 
+    //大
+    string da = 67; 
+    //小
+    string xiao = 68; 
+    //龙宝-例牌
+    string longBaoLi = 69; 
+    //龙宝-4
+    string longBao4 = 70; 
+    //龙宝-5
+    string longBao5 = 71; 
+    //龙宝-6
+    string longBao6 = 72; 
+    //龙宝-7
+    string longBao7 = 73; 
+    //龙宝-8
+    string longBao8 = 74; 
+    //龙宝-9
+    string longBao9 = 75; 
+
+    // 骰宝
+    // 大小
+    string daXiao = 76; 
+    // 单双
+    string danShuang = 77; 
+    // 围骰
+    string weiTou = 78; 
+    // 全围
+    string quanWei = 79; 
+    // 出现单骰
+    string danTou = 80; 
+
+    // 出现双骰
+    string shuangTou = 81; 
+    // 出现全骰
+    string quanTou = 82; 
+    // 对子
+    string duiZi = 83; 
+    // 牌九式
+    string paiJiu = 84; 
+    // 4点或17点
+    string fourOrSevenTeen = 85; 
+
+    // 5点或16点
+    string fiveOrSixteen = 86; 
+    // 6点或15点
+    string sixOrFiveTeen = 87; 
+    // 7点或14点
+    string sevenOrFourTeen = 88; 
+    // 8点或13点
+    string eightOrThirteen = 89; 
+    // 9，10，11，12点
+    string nineToTwelve = 90; 
+
+    // 轮盘
+    // 直接注
+    string directBet = 91; 
+    // 分注
+    string partBet = 92; 
+    // 衔注
+    string joinBet = 93; 
+    // 三数
+    string threeBet = 94; 
+    // 角注
+    string angleBet = 95; 
+    // 四个号码
+    string fourBet = 96; 
+    // 线注
+    string lineBet = 97; 
+    // 列1/2/3
+    string row123Bet = 98; 
+    // 打1/2/3
+    string hit123Bet = 99; 
+    // 红/黑
+    string redBlackBet = 100; 
+    // 单/双
+    // string danShuang = 77; 
+    // 大/小
+    // string daXiao = 76; 
+}
+
+//******************************************* 消息体 *******************************************
+
+//所有赔率信息请求
+message AllOddsRequest {
+	//用户账号
+	string account = 0;
+}
+//所有赔率信息请求
+message AllOddsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//赔率信息列表
+	repeated OddsInfo info = 1;
+}
+
+//更新赔率信息请求
+message UpdateOddsRequest {
+    //用户账号
+	string account = 0;
+    //用户名称
+	string name = 1;
+    //赔率信息列表
+	repeated OddsInfo info = 2;
+}
+//更新赔率信息请求
+message UpdateOddsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;    
+}
+
+
+
+

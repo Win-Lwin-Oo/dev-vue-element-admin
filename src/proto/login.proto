@@ -1,0 +1,228 @@
+// login.proto
+
+syntax = "proto3";
+package login;
+import "player.proto";
+import "limit.proto";
+
+//socket登录验证请求
+message AuthRequest {
+    //账号
+    string account = 1;
+    //密码
+    string token = 2;
+    //客户端类型
+    PlatFormType clientType = 3;
+    //客户端版本号
+    string version = 4;
+}
+//socket登录验证返回
+message AuthReply {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        UnExist = 2;    //用户不存在
+        Incorrect = 3;  //账号密码错误
+    }
+    //结果
+    Code result = 0;
+    //用户余额
+    int32 coin = 1;
+    UserStateType state = 2;
+    string name = 3;
+    //是否修改过密码: 0-未修改 1-已修改
+    int32 pwdChanged = 4;
+    //用户限红
+    repeated limitProject userLimit = 5;
+    //洗码是否可见
+    int32 washVisiable = 6;
+    //赔率信息列表
+	repeated OddsInfo userOdds = 7;
+    //用户福利类型
+    int32 innerGameType = 8;
+    //代理类型
+    int32 agentType = 9;
+    //预扣总额
+    int32 propayCoin = 10;
+    //是否显示支付 0 隐藏 1 显示
+    int32 payVisible = 11;
+    //游戏类型 1:网2  2:网3
+    string gameOperator = 12;
+    //系统的产品列表
+    repeated string gameList = 13;
+    // 是否禁言 1 否 2 是
+    int32 forbidden = 14;
+    //单笔提现最小额度
+    int32 minWithdrawalQuota = 15;
+    //单笔提现最大额度
+    int32 maxWithdrawalQuota = 16;
+    //是否是游客
+    int32 isTourist = 17;
+    // 截图上传 1 不允许 2 允许
+    int32 openShot = 18;
+}
+
+//http登录验证请求
+message LoginRequest {
+    //账号
+    string account = 1;
+    //密码
+    string password = 2;
+    //时间
+    string time = 3;
+    //客户端类型
+    PlatFormType clientType = 4;
+    //登陆端类型
+    string loginType = 5;
+}
+
+//http登录验证应答
+message LoginReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        UnExist = 2;    //用户不存在
+        Incorrect = 3;  //账号密码错误
+    }
+    //结果
+    Code result = 0;
+    //端口号
+    int32 port = 1;
+    //Ip
+    string ip = 2;
+}
+
+//httpPing请求
+message Ping {
+    //时间
+    string time = 1;
+    //线路
+    int32 line = 2;
+}
+
+//httpPong应答
+message Pong {
+    //时间
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //时间
+    string time = 1;
+    //线路
+    int32 line = 2;
+}
+
+message LogOutRequest {
+    //账号
+    string time = 1;
+}
+
+message LogOutReplay {
+    enum Code {
+        Success = 0;
+        Failed = 1;
+    }
+    //结果
+    Code result = 0;
+    //时间
+    string time = 1;
+}
+
+//断线通知
+message OffLineRequest {
+    //账号
+    string account = 1;
+    //客户端类型
+    PlatFormType clientType = 2;
+}
+message OffLineReplay {
+    enum Code {
+        Success = 0;
+        Failed = 1;
+    }
+    //结果
+    Code result = 0;
+}
+
+//检测在线状态
+message CheckOnLineRequest {
+    //电投用户检测
+    int32 phoneUser = 0;
+    //账号列表
+    repeated string accountArr = 1;
+}
+message CheckOnLineReplay {
+    enum Code {
+        Success = 0;
+        Failed = 1;
+    }
+    //结果
+    Code result = 0;
+}
+
+//获取游戏版本号
+message GetGameVersionRequest {
+    //时间
+    PlatFormType clientType = 0;
+}
+
+message GetGameVersionReplay {
+    enum Code {
+        Success = 0;
+        Failed = 1;
+    }
+    //结果
+    Code result = 0;
+    //客户端版本号
+    string game = 1;
+    //电投端版本号
+    string phone = 2;
+    //移动端版本号
+    string mobile = 3;
+}
+
+//断线通知
+message ReconnectRequest {
+    //账号
+    string account = 1;
+}
+message ReconnectReplay {
+    enum Code {
+        Success = 0;
+        Failed = 1;
+    }
+    //结果
+    Code result = 0;
+}
+
+//现金网登陆接口
+message UCLoginRequest {
+    //账号
+    string account = 0;
+    //昵称
+    string name = 1;
+    //udid  唯一标识
+    int32 udid = 2;
+    //时间
+    string time = 3;
+    //客户端类型
+    PlatFormType clientType = 4;
+    //登陆端类型
+    string loginType = 5;
+    //appId
+    int32 appId = 6;
+}
+
+//现金网登陆应答
+message UCLoginReply {
+    enum Code {
+        Success = 0;
+        Failed = 1;
+    }
+    //结果
+    Code result = 0;
+}

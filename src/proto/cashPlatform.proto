@@ -1,0 +1,108 @@
+//产品接入proto接口
+syntax = "proto3";
+package cashPlatform;
+
+message Platform {
+    //应用ID
+    int32 appId = 0;
+    //应用秘钥
+    string appSecret = 1;
+    //应用备注
+    string remark = 2;
+    //应用代理账号
+    string agent = 3;
+}
+
+//请求已接入的产品列表
+message GetAllPlatformRequest {
+    //账号
+    string account = 0;
+}
+
+//获取已接入产品列表应答
+message GetAllPlatformReply {
+    enum Code {
+        Success = 0;    //成功
+        InvalidParam = 1;   //无效参数
+        AccountNotExist = 2;    //账号不存在
+        SqlSyntaxError = 3;     //服务器出现异常
+    }
+    //返回码
+    Code result = 0;
+    //列表信息
+    repeated Platform info = 1;
+}
+
+//添加产品
+message CreatePlatformRequest {
+    //账号
+    string account = 0;
+    //昵称
+    string name = 1;
+    //添加的产品信息
+    Platform info = 2;
+}
+
+//添加产品应答
+message CreatePlatformReply {
+    enum Code {
+        Success = 0;    //成功
+        InvalidParam = 1;   //无效参数
+        Existed = 2;    //该ID已存在
+        AgentNotExist = 3;  //代理不存在
+        SqlSyntaxError = 4;     //服务器出现异常
+        InsertFailed = 5;   //入库出现异常
+    }
+    //返回码
+    Code result = 0;
+    //添加产品信息
+    Platform info = 1;
+}
+
+message EditPlatformRequest {
+    //账号
+    string account = 0;
+    //昵称
+    string name = 1;
+    //添加的产品信息
+    Platform info = 2;
+}
+
+//添加产品应答
+message EditPlatformReply {
+    enum Code {
+        Success = 0;    //成功
+        InvalidParam = 1;   //无效参数
+        PlatformNotExist = 2;    //该ID不存在
+        SqlSyntaxError = 3;     //服务器出现异常
+        DeleteSqlFailed = 4;        //修改数据库失败
+        AgentNotExist = 5;  //代理不存在
+        UpdateFailed = 6;   //更新出现异常
+        AccountNotExist = 7;    //管理员不存在
+    }
+    //返回码
+    Code result = 0;
+    //添加产品信息
+    Platform info = 1;
+}
+
+message DelPlatformRequest {
+    //账号
+    string account = 0;
+    //昵称
+    string name = 1;
+    //要删除的appID
+    int32 appId = 2;
+}
+
+message DelPlatformReply {
+    enum Code {
+        Success = 0;    //成功
+        InvalidParam = 1;   //无效参数
+        PlatformNotExisted = 2;    //该ID不存在
+        SqlSyntaxError = 3;     //服务器出现异常
+        DeleteSqlFailed = 4;        //修改数据库失败
+    }
+    //返回码
+    Code result = 0;
+}

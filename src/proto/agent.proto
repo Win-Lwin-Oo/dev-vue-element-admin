@@ -1,0 +1,981 @@
+syntax = "proto3";
+package agent;
+
+import "game.proto";
+import "member.proto";
+import "limit.proto";
+
+enum WashType{
+    None = 0;
+    Double = 1;
+    Single = 2;
+}
+
+// 总和数据
+message SumInfo {
+    // 总赢
+    string winNum = 0;
+    // 洗码费
+    string washFee = 1;
+    // 公司金额
+    string companyNum = 2;
+    // 和局费
+    string drawFee = 3;
+}
+
+//代理后台的统计信息
+message StatisticsInfo{
+    //总赢
+    double winNum = 1;
+    //和局量
+    double drawNum = 2;
+    //洗码量
+    double washNum = 3;
+    //所有子代理和会员的所有下注金额
+    double totalBet = 4;
+    //统计日期
+    string date = 5;
+}
+
+//管理员基础信息
+message AgentBaseInfo {
+    //账号
+    string account = 0;
+    //昵称
+    string name = 1;
+    //状态
+    int32 state = 2;
+    //剩余点数
+    string coin = 3;
+    //和局率
+    string drawRate = 4;
+    //洗码率
+    string washRate = 5;
+    //占成
+    string stake = 6;
+    //子代理信息
+    repeated AgentBaseInfo info = 7;
+    //洗码类型
+    WashType washType = 8;
+    //上级代理账号
+    string parent = 9;
+    // 代理类型 代理的类型： 1-个人，2-直属
+    int32 agentType = 10;
+    //是否修改过密码: 0-未修改 1-已修改
+    int32 pwdChanged =11;
+    //客户端是否可见洗码和和局： 1-不可见， 2-可见 , 3-可见洗码费，4-可见和局费
+    int32 washVisiable = 12;
+    //是否占股: 1-不占，2-占
+    int32 inStake = 13;
+    //游戏洗码和局类型: 1-计算洗码，2-计算和局, 3-全部计算
+    int32 innerGameType = 42;
+    //代理端是否可见自助结洗码按钮
+    int32 washButtonVisiable = 14;
+    //电话号码
+    string phone = 15;
+}
+
+// 审核代理数据
+message CheckAgentInfo {
+    // 代理账号 
+    string account = 0;
+    // 代理名称
+    string name = 1;
+    // 数据库表中有效点数
+    int32 validCoin = 2;
+    // 真实有效点数
+    int32 realaVaildCoin = 3;
+    // 有效点数差额
+    int32 disCoin = 4;
+    // 上级账号
+    string parent = 5;
+    // 上级名称
+    string parentName = 6;
+    // 下级信息
+    repeated CheckAgentInfo info = 7;
+    // 带有错误数据 1 没有 2 有
+    int32 withError = 8;
+}
+
+//用户信息
+message UserInfo{
+    //账号
+    string account = 0;
+    //密码
+    string password = 1;
+    //昵称
+    string name = 2;
+    //状态
+    int32 state = 3; //1-正常，2-禁用 3-暂停 4-清卡 5-锁定
+    //剩余点数
+    string coin = 4;
+    //子代理和子会员所有的有效点数
+    string validCoin = 5;
+    //总赢
+    int32 winNum = 6;
+    //和局率
+    string drawRate = 7;
+    //和局量
+    double drawNum = 8;
+    //和局费
+    string drawFee = 9;
+    //洗码类型
+    WashType washType = 10;
+    //洗码率
+    string washRate = 11;
+    //洗码量
+    double washNum = 12;
+    //洗码费
+    string washFee = 13;
+    //占成
+    string stake = 14;
+    //公司金额
+    string companyNum = 15;
+    //代理金额  --总金额
+    string agentNum = 16;
+    //所有子代理和会员的所有下注金额
+    double totalBet = 17;
+    //所有子代理和会员产生的小费
+    double dividend = 18;
+    //所有子代理和会员产生的洗点
+    double addCoin = 19;
+    //所有子代理和会员产生的补点
+    double subCoin = 20;
+    //备注
+    string remarks = 21;
+    //上级的账号
+    string parent = 23;
+    // 上级名称
+    string parentName = 24;
+    //在线会员数
+    int32 onLineNum = 26;
+    //离线会员数
+    int32 offLineNum = 27;
+    //不可进入的桌台数组
+    repeated int32 unEnableTable = 28;
+    //每日明细的日期
+    string infoDate = 29;
+    //创建时间
+    string createdAt = 30;
+    //是否在线: 0-不在线，1-在线
+    int32 onLine = 31;
+    // 代理类型 代理的类型： 1-个人，2-直属
+    int32 agentType = 33;
+    //登录IP
+    string ip = 36;
+    //登录地址
+    string address = 37;
+    //最近登录时间
+    string loginTime = 38;
+    // 代理身上的所有限红方案id数组
+    repeated limitId limitIdArr = 39;
+    //客户端是否可见洗码和和局
+    int32 washVisiable = 40;
+    //用户类型： 1-会员，2-代理
+    int32 userType = 41;
+    //已结洗码
+    string washedFee = 42;
+    //已结和局
+    string drawedFee = 43;
+    //未结洗码费
+    string unWashedFee = 44;
+    //未结和局费
+    string unDrawedFee = 45;
+    //游戏洗码和局类型: 1-计算洗码，2-计算和局, 3-全部计算
+    int32 innerGameType = 46;
+    //是否占股: 1-不占，2-占
+    int32 inStake = 47;
+    //代理端是否可见自助结洗码按钮 1 显示 2 不显示
+    int32 washButtonVisiable = 48;
+    // 是否允许批量修改下级会员用户属性 0 允许 1 不允许
+    int32 allowChange = 49;
+    // 截图上传 1 不允许 2 允许
+    int32 openShot = 50;
+    //电话号码
+    string phone = 51;
+}
+
+message ChildAccount {
+    //账号
+    string account = 0;
+    //名称
+    string name = 1;
+    //密码
+    string password = 2;
+    //状态
+    int32 state = 3; // 0:正常，1:停用
+    //删除
+    int32 active = 4; // 0:正常，1:删除
+    //创建时间
+    string createdAt = 5;
+    //登录时间
+    string loginTime = 6;
+    //权限设置
+    string permission = 7;
+}
+
+//************************************ 消息体 ******************************
+
+//代理登录请求
+message LoginRequest {
+    //用户账号
+    string account = 0;
+    //用户密码
+    string password = 1;
+}
+message LoginReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        errPwd = 2;     //错误密码
+        errState = 3;   // 用户状态错误
+        loginLimit = 4; // 登录锁定
+        throwErr = 10; // 抛异常
+    }
+    //结果
+    Code result = 0;
+    //代理信息
+    AgentBaseInfo info = 1;
+    //子账号信息
+    ChildAccount subInfo = 2;
+    //系统的产品列表
+    repeated string gameList = 3;
+    // 赔率数组
+    repeated OddsInfo oddsInfo = 4;
+    // 错误登录次数
+    int32 errLoginNum = 5;
+    // 禁止时间剩余秒数
+    int32 errLoginTime = 6;
+}
+//代理同步请求
+message agentAsyRequest {
+    //用户账号
+    string account = 0;
+    //用户密码
+    string password = 1;
+}
+message agentAsyReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //代理信息
+    AgentBaseInfo info = 1;
+}
+
+//代理创建请求
+message CreateRequest {
+    //操作者账号
+    string account = 0;
+    //操作者昵称
+    string name = 1;
+    //操作者类型
+    int32 type = 2; // 1:管理， 2: 代理
+    //代理信息
+    UserInfo info = 3;
+    //用户类型: 1-会员, 2-代理
+    int32 userType = 4;
+    //重复时是否需要自动刷新帐号 1 需要 2 不需要
+    int32 autoAccount = 5;
+}
+message CreateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        AgentTypeErr = 2; // 多余直属
+        HadName = 3; // 名字重复
+        ParentCoinNotEnough = 4; // 上级点数不足
+        ErrorDrawRate = 5; // 错误和局率
+        ErrorWashRate = 6; // 错误洗码率
+        ErrorStake = 7; // 错误占成率
+        ErrorInnerGameType = 8; // 错误福利方式
+        ErrorInStake = 9; // 错误占成类型
+        ErrorInRoot = 11; // 已存在有效的根节点代理
+    }
+    //结果
+    Code result = 0;
+    //被创建者的帐号
+    string createdAccount = 1;
+}
+
+//更新代理的信息
+message UpdateRequest {
+    //操作者账号
+    string account = 0;
+    //操作者昵称
+    string name = 1;
+    //操作者类型
+    int32 type = 2; // 1:管理， 2: 代理
+    //用户信息
+    UserInfo info = 3;
+    //用户类型: 1-会员, 2-代理
+    int32 userType = 4;
+}
+message UpdateReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        ParentCoinNotEnough = 2; // 上级点数不足
+        CoinNotEnough = 3; // 点数不足
+        AgentTypeErr = 4; // 多余直属
+        ErrorDrawRate = 5; // 错误和局率
+        ErrorWashRate = 6; // 错误洗码率
+        ErrorStake = 7; // 错误占成率
+        ErrorInnerGameType = 8; // 错误福利方式
+        AgentChangeErr = 9; // 直属会员不能修改洗码和局率
+        ErrorInStake = 10; // 错误占成类型
+        InGame = 11;     // 会员正在进行游戏 失败
+    }
+    //结果
+    Code result = 0;
+    // 更新类型 1 更新复数信息 2更新限红 3上分 4下分
+    int32 updateType = 1;
+}
+
+//代理列表请求
+message AllRequest {
+    //用户账号
+    string account = 0;
+}
+message AllReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //管理员信息
+    repeated AgentBaseInfo info = 1;
+}
+
+// 获取指定树结构数据
+message TreeDataRequest {
+    //管理员用户账号
+    string account = 0;
+    //父级账号
+    string parenAccount = 1;
+    // 指定子级账号
+    string childAccount = 2;
+}
+message TreeDataReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //管理员信息
+    repeated AgentBaseInfo info = 1;
+}
+
+//代理的子对象 请求 代理会员 分开分页
+message ChildrenRequest {
+    //用户账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+    //查询类型
+    int32 type = 3; //0: 代理 + 会员, 1: 代理， 2: 会员
+    //是否以结算
+    int32 balanced = 4; // 0: 所有, 1:未结算
+    //游戏类型
+    GameType gameType = 5;
+    // 子代理当前页下标
+    int32 pageIndexForAgent = 6;
+    // 子代理当前页数据量
+    int32 pageSizeForAgent = 7;
+    // 子代理当前排序条件
+    string sortKeyForAgent = 8;
+    // 子代理升序降序 1 升序 2 降序
+    int32 sortTypeForAgent = 9;
+    // 子会员当前页下标
+    int32 pageIndexForMember = 10;
+    // 子会员当前页数据量
+    int32 pageSizeForMember = 11;
+    // 子会员当前排序条件
+    string sortKeyForMember = 12;
+    // 子会员理升序降序 1 升序 2 降序
+    int32 sortTypeForMember = 13;
+    // 是否需要所有上级帐号 1 不需要 2 需要
+    int32 needAllparent = 14;
+    // 是否带有清卡用户 1 不带 2带有
+    int32 withClearAndVoid = 15;
+    // 是否带有未开工账户 0 带有 1 不带有
+    int32 withNoStartedUser = 16;
+    // 特殊会员账号
+    string specialAccount = 17;
+     // 代理筛选关键字
+    string filterKeyForAgent = 18;
+    // 会员筛选关键字
+    string filterKeyForMember = 19;
+    // 按会员在线排序 1 是 2 否
+    int32 sortByOnLine = 20;
+    // 是否只展示低权限数据 1 是 2 否
+    int32 showLowLevel = 21;
+}
+message ChildrenReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //代理信息
+    UserInfo baseInfo = 1;
+    //子代理信息
+    repeated UserInfo agentInfo = 2;
+    //子代理数据量
+    int32 agentCount = 3;
+    //子会员信息
+    repeated UserInfo memberInfo = 4;
+    //子会员数据量
+    int32 memberCount = 5;
+    // 所有父级帐号数组
+    repeated string parentList = 6;
+    // 会员合计数据
+    SumInfo memberSumInfo = 7;
+}
+
+//代理的子对象 请求 代理 会员 一起分页
+message TotalChildrenRequest {
+    //用户账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+    //查询类型
+    int32 type = 3; //0: 代理 + 会员, 1: 代理， 2: 会员
+    //是否以结算
+    int32 balanced = 4; // 0: 所有, 1:未结算
+    //游戏类型
+    GameType gameType = 5;
+    // 当前页下标
+    int32 pageIndex = 6;
+    // 当前页数据量
+    int32 pageSize = 7;
+    // 当前排序条件
+    string sortKey = 8;
+    // 子代理升序降序 1 升序 2 降序
+    int32 sortType = 9;
+    // 是否需要所有上级帐号 1 不需要 2 需要
+    int32 needAllparent = 10;
+    // 搜索时使用的关键字
+    string theKey = 11;
+    // 状态过滤 0 全部 1 正常 2 停用
+    int32 stateFilter = 12;
+}
+message TotalChildrenReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //代理信息
+    UserInfo baseInfo = 1;
+    //子代理信息
+    repeated UserInfo agentInfo = 2;
+    //子会员信息
+    repeated UserInfo memberInfo = 3;
+    //子代理+子会员总数据量
+    int32 count = 4;
+    // 所有父级帐号数组
+    repeated string parentList = 5;
+    // 所有 父级数据
+    repeated UserInfo parentInfo = 6;
+}
+
+//代理的所有信息请求
+message AgentInfoRequest {
+    //用户账号
+    string account = 0;
+}
+message AgentInfoReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //代理信息
+    UserInfo agentInfo = 1;
+}
+
+message ChildAccountRequest{
+    //用户账号
+    string account = 0;
+    // 子账号
+    string theAccount = 1;
+}
+message ChildAccountReplay{
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //代理信息
+    repeated ChildAccount info = 1;
+}
+
+message CreateChildAccountRequest{
+    //用户账号
+    ChildAccount info = 0;
+    //操作者账号
+    string account = 1;
+    //操作者名称
+    string name = 2;
+}
+message CreateChildAccountReplay{
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //代理信息
+    ChildAccount info = 1;
+}
+
+message UpdateChildAccountRequest{
+    //用户账号
+    ChildAccount info = 0;
+    //操作者账号
+    string account = 1;
+    //操作者名称
+    string name = 2;
+}
+message UpdateChildAccountReplay{
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //代理信息
+    ChildAccount info = 1;
+}
+
+//每日信息
+message QueryByDayRequest {
+    //用户账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+    //游戏类型
+    GameType gameType = 3;
+}
+message QueryByDayReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //结果
+    repeated UserInfo info = 1;
+}
+
+//清零代理点数
+message ClearAgentRequest{
+    // 操作者账号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 被操作者 信息
+    UserInfo info = 2;
+
+}
+message ClearAgentReplay{
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+message GetAllAgentRequest {
+    // 操作者帐号
+    string account = 0;
+    // 当前页下标
+    int32 pageIndex = 1;
+    // 当前页数据量
+    int32 pageSize = 2;
+}
+message GetAllAgentReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    // 代理数据数组
+    repeated UserInfo info = 1;
+}
+
+//搜索会员信息
+message SearchAgentRequest {
+    //用户账号
+    string account = 0;
+    // 关键字
+    string theKey = 1;
+    // 当前页下标
+    int32 pageIndex = 2;
+    // 当前页数据量
+    int32 pageSize = 3;
+    // 搜索的属性名称 'name' 'account'
+    string property = 4;
+}
+message SearchAgentReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //会员信息集合
+    repeated UserInfo info = 1;
+}
+
+//所有名下的会员
+message AllMemberRequest{
+    string account = 0;
+}
+message AllMemberReplay{
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //用户信息
+    repeated UserInfo info = 1;
+}
+
+//每日信息
+message QueryStatisticsRequest {
+    //用户账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+}
+message QueryStatisticsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //结果
+    repeated StatisticsInfo info = 1;
+}
+
+//清零代理点数
+message ClearRequest{
+    // 操作者账号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 被操作者 信息
+    string targetAccount = 2;
+    //用户类型: 1-会员, 2-代理
+    int32 userType = 3;
+    // 是否需要清卡 1 不需要 2 需要
+    int32 needVoid = 4;
+
+}
+
+message ClearReplay{
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        InGame = 2;     // 会员正在进行游戏 失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//结洗码
+message WashBalanceRequest{
+    // 操作者账号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 被操作者 信息
+    string targetAccount = 2;
+}
+
+message WashBalanceReplay{
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        BatchWashing = 2; //系统正在批量结洗，请稍等
+        UserWashing = 3;  //该用户正在被结洗，请稍等
+        OtherWashing =4;    //其他用户正在结洗，请稍等
+        NoWashNum = 5;  //结算失败，没有可结算数据
+        NoWashTime = 6; // 不在结洗时间
+    }
+    //结果
+    Code result = 0;
+    //允许结算时间
+    string washTime = 1;
+
+}
+
+//获取所有子用户
+message AllChildRequest {
+    // 帐号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+    //查询类型
+    int32 type = 3; //0: 代理 + 会员, 1: 代理， 2: 会员
+    //是否以结算
+    int32 balanced = 4; // 0: 所有, 1:未结算
+    //游戏类型
+    GameType gameType = 5;
+}
+message AllChildReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    // 代理数据数组
+    repeated UserInfo info = 1;
+    // 会员数据数组
+    repeated MemberInfo memberInfo = 2;
+}
+message CreatDemoAccountReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        NotEnough = 2;  //账号分配完毕
+    }
+    //结果
+    Code result = 0;
+    // 会员数据
+    UserInfo info = 1;
+}
+
+//获取所有子用户
+message CreatDeputySubordinateRequest {
+    //代理帐号
+    string account = 0;
+}
+message CreatDeputySubordinateReplay {
+     enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    // 会员数据
+    UserInfo info = 1;
+}
+
+// 移动代理 获取代理及代理上级信息
+message GetMobileAgentRequest {
+    //代理帐号
+    string account = 0;
+    // 查询账号
+    string theAccount = 1;
+    //开始日期
+    string startDate = 2;
+    //结束日期
+    string endDate = 3;
+    //查询类型
+    int32 type = 4; //1: 会员， 2: 代理
+    //是否以结算
+    int32 balanced = 5; // 0: 所有, 1:未结算
+    //游戏类型
+    GameType gameType = 6;
+}
+message GetMobileAgentReplay {
+     enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    // 会员数据
+    UserInfo info = 1;
+    // 上级信息
+    UserInfo parentInfo = 2;
+}
+
+//代理的子对象 请求 代理会员 分开分页
+message GetUserinfoByDaysRequest {
+    //用户账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+    //查询类型
+    int32 type = 3; // 1: 会员， 2: 代理
+    //是否以结算
+    int32 balanced = 4; // 0: 所有, 1:未结算
+    //游戏类型
+    GameType gameType = 5;
+    // 当前页下标
+    int32 pageIndex = 6;
+    // 前页数据量
+    int32 pageSize = 7;
+}
+message GetUserinfoByDaysReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //数据量
+    int32 count = 1;
+    //信息
+    repeated UserInfo info = 2;
+}
+
+message GetChildByAgentTypeRequest {
+    //用户账号
+    string account = 0;
+    // 目标账号
+    string targetAccount = 1;
+    // 查找用户类型 1 个人 2 直属
+    int32 agentType = 2;
+    // 当前页下标
+    int32 pageIndex = 3;
+    // 当前页数据量
+    int32 pageSize = 4;
+    // 搜索关键字
+    string theKey = 5;
+}
+
+message GetChildByAgentTypeReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        ErrAdmin = 2;   // 管理员账号错误
+    }
+    //结果
+    Code result = 0;
+    //数据量
+    int32 count = 1;
+    //信息
+    repeated AgentBaseInfo info = 2;
+}
+
+message UpdateChildAgentTypeRequest {
+    //用户账号
+    string account = 0;
+     //用户名称
+    string name = 1;
+    // 上级账号
+    string parentAccount = 2;
+    // 修改为用户类型 1 个人 2 直属
+    int32 agentType = 3;
+    // 是否全部 0 不是 1 是
+    int32 changeAll = 4;
+    // 排除账号
+    repeated string expectAccount = 5;
+    // 修改的账号
+    repeated string changeAccount = 6;
+}
+
+message UpdateChildAgentTypeReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        ErrAdmin = 2;   // 管理员账号错误
+        ErrAccount = 3; // 错误的修改账号数组
+    }
+    //结果
+    Code result = 0;
+    //数据量
+    int32 count = 1;
+    //信息
+    repeated AgentBaseInfo info = 2;
+}
+
+message CheckAentVaildCoinRequest {
+    //用户账号
+    string account = 0;
+    //用户名称
+    string name = 1;
+    // 目标账号
+    string targetAccount = 2;
+    // 查询类型 1 查询 2导出
+    int32 queryType = 3;
+}
+
+message CheckAentVaildCoinReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        ErrAccount = 2;   // 代理账号错误
+    }
+    //结果
+    Code result = 0;
+    // 查询对象数据
+    CheckAgentInfo targetInfo = 1;
+    //信息
+    repeated CheckAgentInfo exportInfo = 2;
+}
+
+// 重置代理有效点数
+message ResetAentVaildCoinRequest {
+    //用户账号
+    string account = 0;
+    //用户名称
+    string name = 1;
+    // 目标账号
+    string targetAccount = 2;
+}
+
+message ResetAentVaildCoinReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        ErrAccount = 2;   // 代理账号错误
+        ErrTime = 3;   // 错误时间
+    }
+    //结果
+    Code result = 0;
+}

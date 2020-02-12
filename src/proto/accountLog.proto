@@ -1,0 +1,86 @@
+// accountLog.proto
+
+syntax = "proto3";
+package accountLog;
+
+//订单记录信息
+message LogInfo {
+    //操作者名称
+    string name = 0;
+    //操作类型 0:关闭错误提示
+    int32 type = 1;
+    //桌台id
+    int32 tableId = 2;
+    //桌台名称
+    string tableName = 3;
+    //场次ID
+    int32 screenId = 4;
+    //局数ID
+    int32 inningId = 5;
+    //第几次对比
+    int32 compareNum = 6;
+    //操作时间
+    string createdAt = 7;
+    // 备注信息
+    string remarks = 8;
+}
+
+/********* 消息体 **********/
+
+//添加日志请求
+message CreateLogRequest {
+    //操作者账号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    //操作类型 0:关闭错误提示
+    int32 type = 2;
+    //桌台id
+    int32 tableId = 3;
+    //桌台名称
+    string tableName = 4;
+    //场次
+    int32 screenId = 5;
+    //局次
+    int32 inningId = 6;
+    //第几次对比
+    int32 compareNum = 7;
+    // 备注
+    string remarks = 8;
+}
+
+//添加日志应答
+message CreateLogReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 1;
+}
+
+// 查询日志请求
+message QueryLogRequest {
+    //操作类型
+    optional int32 type = 0;
+    //操作类型
+    optional string accountOrName = 1;
+    // 开始日期
+    string startDate = 2;
+    // 结束日期
+    string endDate = 3;
+    // 当前页下标
+    int32 pageIndex = 4;
+    // 当前页数据量
+    int32 pageSize = 5;
+}
+
+message QueryLogReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    repeated LogInfo info = 1;
+}

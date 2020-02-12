@@ -1,0 +1,234 @@
+// table.proto
+
+syntax = "proto3";
+package limit;
+
+//限红方案
+message limitProject {
+    //最大庄限红
+    int32 maxZ = 0;
+    //最小庄限红
+    int32 minZ = 1;
+    //最大闲限红
+    int32 maxX = 2;
+    //最小闲限红
+    int32 minX = 3;
+    //最大和限红
+    int32 maxH = 4;
+    //最小和限红
+    int32 minH = 5;
+    //最大庄对限红
+    int32 maxZd = 6;
+    //最小庄对限红
+    int32 minZd = 7;
+    //最大闲对限红
+    int32 maxXd = 8;
+    //最小闲对限红
+    int32 minXd = 9;
+    //限红方案名称
+    string name = 10;
+    // 方案id
+    int32 id = 11;
+
+    // 游戏类型
+    int32 gameType = 12;
+    // 最大闲1限红
+    int32 maxX1 = 13;
+    // 最大闲2限红
+    int32 maxX2 = 14;
+    // 最大闲3限红
+    int32 maxX3 = 15;
+    // 最小闲1限红
+    int32 minX1 = 16;
+    // 最小闲2限红
+    int32 minX2 = 17;
+    // 最小闲3限红
+    int32 minX3 = 18;
+    // 最大闲1限红 翻倍
+    int32 maxX1Double = 19;
+    // 最大闲2限红 翻倍
+    int32 maxX2Double = 20;
+    // 最大闲3限红 翻倍
+    int32 maxX3Double = 21;
+    // 最小闲1限红 翻倍
+    int32 minX1Double = 22;
+    // 最小闲2限红 翻倍
+    int32 minX2Double = 23;
+    // 最小闲3限红 翻倍
+    int32 minX3Double = 24;
+
+    // 最小限红
+    int32 min = 25;
+    // 单项最大限红
+    int32 singleMax = 26;
+    // 对子最大限红
+    int32 doubleMax = 27;
+    // 和最大限红
+    int32 heMax = 28;
+    // 大小最大限红
+    int32 bigSmallMax = 29;
+    // 普通对子最大限红
+    int32 normalDoubleMax = 30;
+    // 完美对子最大限红
+    int32 perfectDoubleMax = 31;
+    // 龙宝最大限红
+    int32 dragonJewel = 32;
+    // 超级六最大限红
+    int32 superSix = 33;
+
+    // 骰宝
+    // 大/小 限红
+    int32 daXiaoMax = 34;
+    // 单/双限红
+    int32 danShuangMax = 35;
+    // 全骰限红
+    int32 quanTouMax = 36;
+    // 围骰1～围骰6 限红
+    int32 weiTou1ToWeiTou6Max = 37;
+    // 组合 限红
+    int32 zuHeMax = 38;
+    // 对子1～对子6 限红
+    int32 duiZi1ToDuiZi6Max = 39;
+
+    // 单点1～单点6 限红
+    int32 signal1ToSignal6Max = 40;
+    // 和值9/10/11/12 限红
+    int32 he9ToHe12Max = 41;
+    // 和值 8/13 限红
+    int32 he8AndHe13Max = 42;
+    // 和值 7/14 限红
+    int32 he7AndHe14Max = 43;
+    // 和值 6/15 限红
+    int32 he6AndHe15Max = 44;
+    // 和值 5/16 限红
+    int32 he5AndHe16Max = 45;
+    // 和值 4/17 限红
+    int32 he4AndHe17Max = 46;
+
+    // 轮盘
+    // 直接注
+    int32 directBetMax = 47; 
+    // 分注
+    int32 partBetMax = 48; 
+    // 衔注
+    int32 joinBetMax = 49; 
+    // 三数
+    int32 threeBetMax = 50; 
+    // 角注
+    int32 angleBetMax = 51; 
+    // 四个号码
+    int32 fourBetMax = 52; 
+    // 线注
+    int32 lineBetMax = 53; 
+    // 列1/2/3
+    int32 row123BetMax = 54; 
+    // 打1/2/3
+    int32 hit123BetMax = 55; 
+}
+message limitId {
+    int32 id = 1;
+    int32 gameType = 2;
+}
+//******************************************* 消息体 *******************************************
+
+//所有限红方案请求
+message AllLimitRequest {
+	//用户账号
+	string account = 0;
+}
+//所有限红方案请求
+message AllLimitReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	// 限红方案数组
+	repeated limitProject info = 1;
+}
+
+//添加限红方案请求
+message AddLimitRequest {
+    //用户账号
+	string account = 0;
+    //用户名称
+    string name = 1;    
+    //限红方案信息
+    limitProject info = 2;
+}
+//添加限红方案请求
+message AddLimitReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;    
+}
+
+//修改限红方案请求
+message UpdateLimitRequest {
+   //用户账号
+	string account = 0;
+    //用户名称
+    string name = 1;    
+    //限红方案信息
+    limitProject info = 2;
+}
+//修改限红方案请求
+message UpdateLimitReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;    
+}
+
+//删除限红方案请求
+message DeleteLimitRequest {
+    //用户账号
+	string account = 0;    
+    // 方案id
+    int32 id = 1; 
+    // 方案名称
+    string projectName = 2;
+}
+//删除限红方案请求
+message DeleteLimitReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;    
+}
+
+//更新用户限红方案请求
+message UpdateUserLimitRequest {
+    //用户账号
+	string account = 0;    
+    //用户名称
+    string name = 1;
+    // 被更新用户account 数组
+    repeated string targetAccountArr = 2; 
+    //用户类型: 1-会员, 2-代理
+    int32 userType = 3;
+    // 限红ID 数组
+    repeated limitId limitProjectIdArr = 4;
+}
+//更新用户限红方案请求
+message UpdateUserLimitReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;    
+}

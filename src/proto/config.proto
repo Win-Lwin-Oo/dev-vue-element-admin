@@ -1,0 +1,211 @@
+syntax = "proto3";
+package config;
+
+message ChatData {
+    // 时间间隔
+    int32 interval = 0;
+    // 字数限制
+    int32 word = 1;
+}
+
+message WashQuota {
+    // 单笔最小限额
+    int32 minQuota = 0;
+    // 单笔最大限额
+    int32 strokeQuota = 1;
+    // 每日限额
+    int32 dayQuota = 2;
+}
+
+message CompanyBank {
+    // 所在行
+    string name = 1;
+    // 银行卡号
+    string id = 2;
+    // 所在支行
+    string address = 3;
+    // 开户人
+    string holder = 4;
+}
+
+message recharge {
+    repeated string agentArr = 1;
+}
+
+message PlayInfo {
+    // 代理
+    string agentAccount = 0;
+    // 最大会员数
+    int32 maxMemberNum = 1;
+    // 会员初始金额
+    int32 limitAmount = 2;
+}
+
+message GetBankConfigRequest {
+    //账号
+    string account = 0;
+}
+
+message GetBankConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;   //失败
+    }
+    //返回码
+    Code result = 0;
+    //银行卡信息
+    recharge info = 1;
+}
+message UpdateBankConfigRequest {
+    //账号
+    string account = 0;
+    // 名称
+    string name = 1;
+    // 配置信息
+    recharge info = 2;
+}
+
+message UpdateBankConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;   //失败
+    }
+    //返回码
+    Code result = 0;
+}
+
+message GetChatConfigRequest {
+    //账号
+    string account = 0;
+}
+
+message GetChatConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;   //失败
+    }
+    //返回码
+    Code result = 0;
+    //发言信息
+    ChatData info = 1;
+}
+message UpdateChatConfigRequest {
+    //账号
+    string account = 0;
+    // 名称
+    string name = 1;
+    // 配置信息
+    ChatData info = 2;
+}
+
+message UpdateChatConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;   //失败
+    }
+    //返回码
+    Code result = 0;
+}
+
+message GetWashConfigRequest {
+    //账号
+    string account = 0;
+}
+
+message GetWashConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;   //失败
+    }
+    //返回码
+    Code result = 0;
+    //发言信息
+    string info = 1;
+}
+message UpdateWashConfigRequest {
+    //账号
+    string account = 0;
+    // 名称
+    string name = 1;
+    // 配置信息
+    string info = 2;
+}
+
+message UpdateWashConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;   //失败
+    }
+    //返回码
+    Code result = 0;
+}
+
+message GetQuotaConfigRequest {
+    //账号
+    string account = 0;
+}
+
+message GetQuotaConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;   //失败
+    }
+    //返回码
+    Code result = 0;
+    //发言信息
+    WashQuota info = 1;
+}
+message UpdateQuotaConfigRequest {
+    //账号
+    string account = 0;
+    // 名称
+    string name = 1;
+    // 配置信息
+    WashQuota info = 2;
+}
+
+message UpdateQuotaConfigReplay {
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;   //失败
+    }
+    //返回码
+    Code result = 0;
+}
+
+message GetPlayConfigRequest {
+    // 账号
+    string account = 0;
+}
+
+message GetPlayConfigReplay {
+    enum Code {
+        Success = 0; //成功
+        Failed = 1;  //失败
+    }
+    //返回码
+    Code result = 0;
+    // 配置信息
+    PlayInfo info = 1;
+    // 是否代理可修改
+    int32 haveAgent = 2;
+}
+
+message UpdatePlayConfigRequest {
+    // 账号
+    string account = 0;
+    // 名称
+    string name = 1;
+    // 配置信息
+    PlayInfo info = 2;
+}
+
+message UpdatePlayConfigReplay {
+    enum Code {
+        Success = 0; //成功
+        Failed = 1;  //失败
+        NotEnough = 2; //无此代理
+    }
+    //返回码
+    Code result = 0;
+}

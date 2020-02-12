@@ -1,0 +1,404 @@
+syntax = "proto3";
+package member;
+
+import "table.proto";
+import "game.proto";
+import "limit.proto";
+
+//平台类型
+enum PlatFormType {
+    PC = 0;
+    Mobile = 1;
+    H5 = 2;
+    Phone = 3;
+}
+//会员监控信息
+message MemberInfo {
+    int32 watch = 0;    //是否被观察
+    int32 state = 1;    //是否被禁用
+    string account = 2; //会员账号
+    string name = 3;    //会员名称
+    int32 onLine = 4;   //是否在线
+    string coin = 5;     //剩余点数
+    int32 winNum = 6;      //当天总赢
+    string tableName = 7;   //当前桌台名称
+    GameType gameType = 8;    //当前游戏类型
+    int32 numZ = 9;         //庄下注金额
+    int32 numX = 10;        //闲下注金额
+    int32 numH = 11;        //和下注金额
+    int32 numZD = 12;       //庄对下注金额
+    int32 numXD = 13;       //闲对下注金额
+    string parentAccount = 14;  //上级代理账号
+    string parentName = 15;     //上级代理名称
+    string loginTime = 16;      //最近登录时间
+    string ip = 17;             //登录IP
+    string address = 18;        //登录地址
+    string remarks = 19;         //备注
+    int32 tableId = 20;        //所在table id
+    int32 washType = 21;      // 洗码类型
+    repeated limitId limitIdArr = 22; // 代理身上的所有限红方案id数组
+    //游戏洗码和局类型: 1-计算洗码，2-计算和局, 3-全部计算
+    int32 innerGameType = 23;
+    // 和局率
+    string drawRate = 24;
+    // 洗码率
+    string washRate = 25;
+    // 代理分成
+    string stake = 26;
+    // 代理类型 代理的类型： 1-个人，2-直属
+    int32 agentType = 27;
+     //客户端是否可见洗码和和局
+    int32 washVisiable = 28;
+    //密码
+    string password = 29;
+    //客户端类型
+    string loginType = 30;
+    //创建时间
+    string createdAt = 31;
+    //扩展押注项-大、龙单、闲1平
+    int32 num1 = 32;
+    //扩展押注项-小、龙双、闲1翻
+    int32 num2 = 33;
+    //扩展押注项-任意对子、龙红、闲2平
+    int32 num3 = 34;
+    //扩展押注项-完美对子、龙黑、闲2翻
+    int32 num4 = 35;
+    //扩展押注项-庄龙宝、虎单、闲3平
+    int32 num5 = 36;
+    //扩展押注项-闲龙宝、虎双、闲3翻
+    int32 num6 = 37;
+    //扩展押注项-超级6、虎红
+    int32 num7 = 38;
+    //扩展押注项-虎黑
+    int32 num8 = 39;
+    //百家乐用户下注信息
+    BaiJiaLeMemberCoinInfo baijialeMemberCoinInfo = 41;
+    //龙虎斗用户下注信息
+    LongHuDouMemberCoinInfo longhudouMemberCoinInfo = 42;
+    //牛牛用户下注信息
+    NiuNiuMemberCoinInfo niuniuMemberCoinInfo = 43;
+    //骰宝用户下注信息
+    TouBaoMemberCoinInfo toubaoMemberCoinInfo = 44;
+    //轮盘用户下注信息
+    LunPanMemberCoinInfo lunpanMemberCoinInfo = 45;
+    // 截图上传 1 不允许 2 允许
+    int32 openShot = 46;
+    // 手机号
+    string phone = 47;
+}
+
+//会员简单信息
+message SimpleMemberInfo {
+    string account = 0; //会员账号
+    string name = 1;    //会员名称
+}
+
+//************************************ 消息体 ******************************
+
+//所有会员信息
+message AllMemberRequest {
+    //用户账号
+    string account = 0;
+    // 当前页下标
+    int32 pageIndex = 1;
+    // 当前页数据量
+    int32 pageSize = 2;
+    // 当前排序条件
+    string sortKey = 3;
+    // 升序降序 1 升序 2 降序
+    int32 sortType = 4;
+    // 被定位的账号
+    string specialAccount = 5;
+    // 管理员账号
+    string adminAccount = 6;
+    // 游戏类型
+    int32 gameType = 7;
+}
+message AllMemberReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //会员信息集合
+    repeated MemberInfo info = 1;
+    // 当前数据总量
+    int32 count = 2;
+    // 当前在线人数
+    int32 onLineNum = 3;
+
+}
+
+// 管理员盯人数据获取
+message GetWatchMemberRequest {
+    //用户账号
+    string account = 0;
+    // 被盯会员账号数组
+    repeated string accountArr = 1;
+}
+message GetWatchMemberReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //会员信息集合
+    repeated MemberInfo info = 1;
+}
+
+//搜索会员信息
+message SearchMemberRequest {
+    //用户账号
+    string account = 0;
+    // 关键字
+    string theKey = 1;
+    // 当前页下标
+    int32 pageIndex = 2;
+    // 当前页数据量
+    int32 pageSize = 3;
+    // 当前排序条件
+    string sortKey = 4;
+    // 升序降序 1 升序 2 降序
+    int32 sortType = 5;
+    // 是否只要在线 0 不是 1 是
+    int32 onlyOnline = 6;
+    // 被定位的账号
+    string specialAccount = 7;
+    // 管理员账号
+    string adminAccount = 8;
+    // 游戏类型
+    int32 gameType = 9;
+    // 搜索的属性名称 'name' 'account'
+    string property = 10;
+}
+message SearchMemberReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //会员信息集合
+    repeated MemberInfo info = 1;
+    // 总数据条数
+    int32 count = 2;
+    // 当前在线人数
+    int32 onLineNum = 3;
+}
+
+//所有桌台信息
+message AllTableRequest {
+    //用户账号
+    string account = 0;
+    // 当前页下标
+    int32 pageIndex = 1;
+    // 当前页数据量
+    int32 pageSize = 2;
+    // 请求时间戳
+    string time = 3;
+}
+message AllTableReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //桌台信息集合
+    repeated TableInfo info = 1;
+    // 请求时间戳
+    string time = 2;
+}
+
+//监控指定会员
+message WatchMemberRequest {
+    //用户账号
+    string account = 0;
+    //是否监控
+    int32 option = 1;
+    // 管理员账号
+    string adminAccount = 2;
+}
+message WatchMemberReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    // 所盯用户账号数组
+    repeated string watchUsers = 1;
+}
+//暂停指定会员
+message pauseMemberRequest {
+    //操作用户账号
+    string account = 0;
+    //操作用户名称
+    string name = 1;
+    // 会员类型 1会员 2 电投
+    int32 userType = 2;
+    //被暂停会员信息
+    MemberInfo info = 3;
+}
+message pauseMemberReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//禁止会员游戏
+message KickMemberRequest {
+    //用户账号
+    string account = 0;
+    //是否禁止
+    int32 option = 1;
+}
+message KickMemberReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//清零会员点数
+message ClearMemberRequest{
+    // 操作者账号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 被操作者 信息
+    MemberInfo info = 2;
+
+}
+message ClearMemberReplay{
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+// 根据tableID查询用户
+message QueryMemberByTableIdRequest {
+    //用户账号
+    string account = 0;
+    // tableId
+    repeated int32 tableId = 1;
+    // 当前页下标
+    int32 pageIndex = 2;
+    // 当前页数据量
+    int32 pageSize = 3;
+    // 当前排序条件
+    string sortKey = 4;
+    // 升序降序 1 升序 2 降序
+    int32 sortType = 5;
+    // 被定位的账号
+    string specialAccount = 6;
+    // 管理员账号
+    string adminAccount = 7;
+    // 游戏类型
+    int32 gameType = 8;
+}
+
+message QueryMemberByTableIdReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //会员信息集合
+    repeated MemberInfo info = 1;
+    // 总数据条数
+    int32 count = 2;
+    // 当前在线人数
+    int32 onLineNum = 3;
+}
+
+//搜索会员简单信息
+message SearchSimpleMemberRequest {
+    //用户账号或名称
+    string date = 0;
+    string accountOrUserName = 1;
+}
+//搜索会员简单信息应答
+message SearchSimpleMemberReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        MemberNotExist = 1;
+        Failed = 2;     //失败
+    }
+    //结果
+    Code result = 0;
+    //会员信息集合
+    repeated SimpleMemberInfo info = 1;
+}
+
+// 批量修改会员桌台
+message BatchUpdateUserRequest {
+    // 操作者帐号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 电投会员id数组
+    repeated string accountArr = 2;
+    // 不能进入的桌台
+    repeated int32 unEnableTable = 3;
+    // 是否是所有会员 1 否 2 是
+    int32 needAllMember = 4;
+}
+message BatchUpdateUserReplay {
+    // 返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+//分页会员获取下标
+message MemberIndexRequest {
+    //用户账号
+    string account = 0;
+    // 每页数据量
+    int32 pageSize = 1;
+    // 当前排序条件
+    string sortKey = 2;
+    // 会员升序降序 1 升序 2 降序
+    int32 sortType = 3;
+    // 查找对象账号 字符串
+    string targeAccount = 4;
+    // 是否带有清卡用户 1 不带 2带有
+    int32 withClearAndVoid = 5;
+    //上级用户账号
+    string parent = 6;
+}
+message MemberIndexReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //会员页标
+    int32 pageIndex = 1;
+}

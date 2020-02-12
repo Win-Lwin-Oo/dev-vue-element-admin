@@ -1,0 +1,140 @@
+// phoneUser.proto
+
+syntax = "proto3";
+package phoneUser;
+
+import "table.proto";
+import "game.proto";
+
+message phoneUserInfo {
+    // 帐号
+    string account = 0;
+    // 密码
+    string password = 1;
+    // 不能进入的桌台
+    repeated int32 unEnableTable = 2;
+    // 是否在线
+    int32 onLine = 3;
+    // 创建者帐号
+    string createrAccount = 5;
+    // 备注
+    string remarks = 6;
+    // 创建时间
+    string createAt = 7;
+    //最近登录时间
+    string loginTime = 8;
+    //登录IP
+    string ip = 9;
+    //登录地址
+    string address = 10;
+    //所在table id
+    int32 tableId = 11;
+    //当前桌台名称
+    string tableName = 12;
+    //当前游戏类型
+    GameType gameType = 13;
+    // 用户状态：1-正常，2-禁用，3-锁定，4-作废
+    int32 state = 14;
+}
+
+// 获取全部
+message AllUserRequest {
+    // 操作者帐号
+    string account = 0;
+    // 当前页下标
+    int32 pageIndex = 1;
+    // 当前页数据量
+    int32 pageSize = 2;
+}
+message AllUserReplay {
+   //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    // 电投会员信息
+    repeated phoneUserInfo info = 1;
+}
+
+// 创建
+message CreateRequest {
+    // 操作者帐号
+    string account = 0;
+     // 操作者名称
+    string name = 1;
+    // 电投会员信息
+    repeated phoneUserInfo info = 2;
+}
+message CreateReplay {
+    // 返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+// 删除
+message DeleteRequest {
+    // 操作者帐号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 电投会员信息
+    repeated string accountArr = 2;
+}
+
+message DeleteReplay {
+    // 返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    // 结果
+    Code result = 0;
+}
+
+// 修改
+message UpdateRequest {
+    // 操作者帐号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    //用户的账号
+    string userAccount = 2;
+    // 电投会员信息
+    phoneUserInfo info = 3;
+}
+message UpdateReplay {
+    // 返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+// 批量修改电投会员桌台
+message BatchUpdateRequest {
+    // 操作者帐号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+    // 电投会员id数组
+    repeated string accountArr = 2;
+    // 不能进入的桌台
+    repeated int32 unEnableTable = 3;
+}
+message BatchUpdateReplay {
+    // 返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}

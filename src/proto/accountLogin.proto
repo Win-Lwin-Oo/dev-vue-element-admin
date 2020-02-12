@@ -1,0 +1,94 @@
+// accountLogin.proto
+
+syntax = "proto3";
+package accountLogin;
+
+
+//登录请求
+message LoginRequest {
+    //账号
+    string account = 0;
+    //密码
+    string password = 1;
+}
+
+//登录应答
+message LoginReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    optional string session = 1;
+    string name = 2;
+    int32 state = 3;
+     // 第1次对比时间
+    int32 resultTimeOne = 4;
+    // 第2次对比时间
+    int32 resultTimeTwo = 5;
+    // 第3次对比时间
+    int32 resultTimeThree = 6;
+}
+
+//录入端登录请求
+message ControlLoginRequest {
+    //table id
+    int32 tableId = 0;
+}
+
+//录入端登录应答
+message ControlLoginReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    optional string session = 1;
+}
+
+//登出请求
+message LogOutRequest {
+    //时间
+    string time = 0;
+}
+
+//登出应答
+message LogOutReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+}
+
+//录入端登出请求
+message ControlLogOutRequest {
+    //table id
+    int32 tableId = 0;
+}
+
+//录入端登出应答
+message ControlLogOutReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+}
+
+// ping
+message PingRequest {
+    string ping = 0;
+}
+message PingReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+}

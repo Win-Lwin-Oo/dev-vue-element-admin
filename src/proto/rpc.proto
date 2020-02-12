@@ -1,0 +1,116 @@
+// rpc.proto
+
+syntax = "proto3";
+package rpc;
+
+import "table.proto";
+import "game.proto";
+import "player.proto";
+
+message RpcRequest {
+    //io 分类房间
+    string room = 0;
+    //io 事件名称
+    string event = 1;
+    //io 事件数据
+    bytes data = 2;
+}
+
+message PlayerInfoReplay {
+    PlayerInfo info = 0;
+}
+
+message PauseUserReplay {
+    PlayerInfo info = 0;
+}
+
+message TableInfoReplay {
+    int32 tableId = 0;
+    TableInfo info = 1;
+}
+
+message GameInfoReplay {
+    int32 tableId = 0;
+    GameInfo info = 1;
+}
+
+message TableInfoArrReplay {
+    repeated int32 tableIdArr = 0;
+    repeated TableInfo infoArr = 1;
+}
+
+message CancelTableReplay {
+    int32 tableId = 0;
+    TableInfo info = 1;
+}
+
+message ChatReplay {
+    ChatInfo info = 0;
+}
+
+message UpdateOddsReplay {
+    repeated OddsInfo userOdds = 0;
+}
+//通知用户结洗码
+message washReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+//通知用户订单
+message PayOrderReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //客户端跳转地址
+    string url = 1;
+    //渠道
+    int32 channel = 2;
+}
+//通知用户禁言
+message ForbiddenReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+//更新提现额度配置
+message UpdateWithdrawalConfigReplay {
+    enum Code {
+        Success = 0;        //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //最小提现额度
+    int32 minQuota = 1;
+    //最大提现额度
+    int32 maxQuota = 2;
+    //当日提现总额
+    int32 dayQuota = 3;
+}
+
+// 更新提现进度
+message updateWithdrawalProgressReplay {
+    enum Code {
+        Success = 0;    // 成功
+        Failed = 1;     // 失败
+    }
+    // 结果
+    Code result = 0;
+    // 金额
+    int32 coinNum = 1;
+    // 说明信息
+    string info = 2;
+}

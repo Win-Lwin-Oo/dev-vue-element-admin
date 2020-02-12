@@ -1,0 +1,440 @@
+syntax = "proto3";
+package pay;
+
+import "table.proto";
+import "game.proto";
+
+//渠道
+enum Channel {
+    wanshi = 1; //万事us
+    rongfu = 2; //新加坡荣富支付
+    daifu = 3; //代付网
+}
+
+//订单状态荣富
+enum PayStateRF {
+    Unpaid = 0; //未付款
+    Pending = 1; //待放币
+    Completed = 2; //完成
+    Cancelled = 3; //取消
+    Representation = 4; //申述中
+}
+
+// PayOne订单状态
+enum PayStatePO {
+    Pending = 1; //未支付
+    Cancelled = 3; //订单完成
+    Failed = 4; //订单失败
+    Representation = 5; //订单已过期
+}
+
+message PayChannel {
+    int32 id = 0;
+    string name = 1;
+    string mode = 2;
+    string flag = 3;
+}
+
+message PayMethod {
+    int32 id = 0;
+    int32 methodId = 1;
+    string name = 2;
+    int32 channelId = 3;
+    string channelName = 4;
+    int32 min = 5;
+    int32 max = 6;
+    string mode = 7;
+    int32 actived = 8;  // 状态：1-开启，2关闭    
+    string info = 9;    //详细信息
+    string exchangeRate = 10;   // 汇率
+    // 支付类型  1-充值 2-提现
+    int32 payType = 11;
+}
+
+//订单信息
+message PayOrder {
+    //id
+    string id = 0;
+	//账号
+    string account = 1;
+	//订单状态： 0未支付 1已支付 2订单成功 3订单失败 4处理中 5订单不存在
+	int32 state = 2;
+    //充值金额
+    int32 num = 3;
+    //订单类型： 1-充值，2-提现
+    int32 billType = 4;
+    //账号名称
+    string name = 5;
+    //支付方式名称
+    string payMethodName = 9;
+    //备注
+    string remarks = 12;
+    //完成时间
+    string completeTime = 13;
+    // 之前的点数
+    string coinB = 14;
+    // 之前的点数
+    string coinE = 15;
+    // 创建时间
+    string createdAt = 16;
+    // 支付渠道
+    int32 channelId = 17;
+}
+
+//提现申请的信息体
+message WithdrawalsRequest{
+    //申请ID
+    int32 id = 1;                                  
+    //订单ID
+    string billId = 2;                             
+    //用户账号
+    string account = 3;                       
+    //用户名字（真实姓名用户输入）
+    string name = 4;	                    
+    //银行卡账号
+    string bankAccount = 5;               
+    //银行名称
+    string bankName = 6;                   
+    //审批人账号
+    string checkUserAccount = 7;     
+    //审批人名称
+    string checkUserName = 8;         
+    //审批状态 0 未处理  1 待付款  2 已拒绝 3 已付款 4 拒绝付款
+    int32 checkStatus = 9;               
+    //管理员填写审批备注
+    string remarks = 10;                      
+    //用户填写提现备注
+    string userRemarks = 11;              
+    //金额
+    int32 moneyNum = 12;                  
+    //下分数量
+    int32 coinNum = 13;              
+    //审批时间
+    string checkTime = 14;                  
+    //完成时间
+    string completeTime = 15;
+    // 创建时间
+    string createdAt = 16;
+    // 用户剩余点数
+    string leftCoin = 17;     
+    // 订单类型 1 提现 2 充值
+    int32 billType = 18;
+    // 电话号      
+    string phone = 19;
+    //到账、汇款时间
+    string payTime = 20;
+    //卡尾号
+    //支付方式
+    string payMethod = 21;
+    //省份
+    string payProvinces = 22;
+    //用户昵称
+    string userName = 23;
+    // 汇款员账号
+    string operatorAccount = 24;
+    // 汇款员账号
+    string operatorName = 25;
+    // 汇款员备注
+    string operatorRemark = 26;
+    // 实际提现金额
+    int32 actualAmount = 27;
+}
+//******************************************* 消息体 *******************************************
+//充值请求
+message PayRequest {
+	//用户账号
+	string account = 0;
+    //用户昵称
+    string name = 1;
+    //金额
+    int32 num = 2;
+    //支付方式ID
+    int32 payMethodId = 3;
+    //支付类型ID
+    int32 payModeId = 4;
+    //付款人
+    string payor = 5;
+    //支付账号 汇款账户名
+    string payAccount = 6;
+    //支付名称 支行名
+    string payName = 7;
+    //备注
+    string remarks = 9;
+    //到账、汇款时间
+    string payTime = 10;
+    //卡尾号
+    string payCard = 11;
+    //省份
+    string payProvinces = 12;
+    //转账方式
+    string payMethod = 13;
+}
+//充值请求
+message PayReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        CreateOrderFailed = 2;      //订单生成失败
+    }
+    //结果
+    Code result = 0;
+    //订单链接
+    string url = 1;
+    //订单参数
+    string params = 2;
+}
+//提款申请
+message DrawPayApplyRequest {
+    //用户账号
+	string account = 0;
+    //用户名
+    string name = 1;
+    //银行账号
+    string bankAccount = 2;
+    //开户名称
+    string bankName = 3;
+    //备注
+    string userRemarks = 4;
+    //金额
+    int32 moneyNum = 5;
+    //支付方式ID
+    int32 payMethodId = 6;
+    //支付类型ID
+    int32 payModeId = 7;
+    //电话号码
+    string phoneNum = 8;
+    //开户人
+    string holder = 9;
+    //银行所属省份
+    string payProvinces = 10;
+}
+message DrawPayApplyReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        CoinNotEnough = 2;  //余额不足
+        MoreMaxQuota = 3;       //超出单笔最大额度
+        MoreDayQuota = 4;       //超出当日提现总额
+        MoreMinQuota = 5;       //超出单笔最小额度
+    }
+    //结果
+    Code result = 0;
+    //订单ID
+    string billId = 1;
+    //申请时间
+    string requestTime = 2;
+    //申请金额
+    int32 requestCoin = 3;
+    //当日提现总额
+    int32 dayCoin = 4;
+}
+//获取订单
+message PayOrderRequest {
+    //用户账号
+	string account = 0;
+    // 查询者名称
+    string name = 1;
+    // 起始日期
+    string startDate = 2;
+    // 结束日期
+    string endDate= 3;
+    // 页下标
+    int32 pageIndex = 4;
+    // 页大小
+    int32 pageSize = 5;
+    // 订单类型
+    int32 billType = 6; 
+    // 订单Id
+    string id = 7;
+    // 状态
+    int32 state = 10;
+    // 渠道
+    int32 channel = 11;
+}
+message PayOrderReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //获取所有订单
+	repeated PayOrder info = 1;
+    // 订单数量
+    int32 count = 2;
+    // 总金额
+    int32 totalNum = 3;
+}
+
+message WithdrawalsRejectReplay {
+    string remarks = 1;
+}
+// 查询提现申请
+message QueryWithDrawalsRequest {
+    // 查询者账号
+    required string account = 1;
+    // 查询者名称
+    required string name = 2;
+    // 起始日期
+    required string startDate = 3;
+    // 结束日期
+    required string endDate= 4;
+    // 页下标
+    required int32 pageIndex = 5;
+    // 页大小
+    required int32 pageSize = 6;
+    //  关键字
+    string theKey = 7;
+    // 审核状态
+    int32 checkStatus = 8;
+    // 订单类型
+    int32 billType = 9;
+}
+
+message QueryWithDrawalsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    // 提现申请信息
+    repeated WithdrawalsRequest info = 1;
+    // 总条数
+    int32 count = 2;
+    // 充值总条数
+    int32 rechargeCount = 3;
+    // 最新充值请求时间
+    string lastRechargeTime  = 4;
+    // 最新提现请求时间
+    string lastWithDrawalTime  = 5;
+}
+// 更新提现申请
+message UpdateWithDrawalsRequest {
+    // 审批者账号
+    string account = 1;
+    // 审批者名称
+    string name = 2;
+    // 申请信息
+    WithdrawalsRequest info = 3;
+}
+
+message UpdateWithDrawalsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+        CoinNotEnough = 2; // 点数不足
+        WithdrawalMore = 3;     //超出当日提现额度
+    }
+    //结果
+    Code result = 0;
+}
+// 创建提现申请
+message CreateWithDrawalsRequest {
+    // 创建者账号
+    string account = 1;
+    // 创建者名称
+    string name = 2;
+    // 申请信息
+    WithdrawalsRequest info = 3;
+}
+
+message CreateWithDrawalsReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+// 获取支付方式
+message GetPaymentMethodRequest {
+    // 账号
+    string account = 1;
+}
+
+message GetPaymentMethodReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    repeated PayMethod info = 1;
+    // 渠道信息
+    repeated PayChannel channelInfo = 2;
+}
+
+message WithdrawalsAgreeReplay {
+    WithdrawalsRequest info = 1;
+}
+
+// 创建支付方式
+message CreatePaymentMethodRequest {
+    // 账号
+    string account = 1;
+    // 名称
+    string name = 2;
+    // 支付方式信息
+    PayMethod info = 3;
+}
+
+message CreatePaymentMethodReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+// 更新支付方式
+message UpdatePaymentMethodRequest {
+    // 账号
+    string account = 1;
+    // 名称
+    string name = 2;
+    // 支付方式信息
+    PayMethod info = 3;
+}
+
+message UpdatePaymentMethodReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
+
+// 获取所有支付渠道 支付方式
+message QueryRechargeChannelRequest {
+    // 操作者帐号
+    string account = 0;
+    // 操作者名称
+    string name = 1;
+}
+message QueryRechargeChannelReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败 参数错误
+        ErrAdmin = 2;   //无此管理员
+    }
+    //结果
+    Code result = 0;
+    // 渠道信息
+    repeated PayChannel info = 1;
+    // 当前渠道
+    repeated int32 curId = 2;
+    // 支付方法信息
+    repeated PayMethod methodInfo = 3;
+}

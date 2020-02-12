@@ -1,0 +1,134 @@
+syntax = "proto3";
+package ViewTool;
+
+// 登录请求
+message loginRequest {
+    // 操作员账号
+    string account = 0;
+    // 密码
+    string password = 1;
+}
+
+// 登录应答
+message loginReply {
+    //返回码
+    enum Code {
+        Success = 0; 
+        Fail = 1;
+        //用户不存在
+        UnExist = 2; 
+        //用户被禁
+        Inactive = 3;
+        //账号密码错误
+        Incorrect = 4; 
+    }
+    Code result = 0;
+}
+
+// 汇款信息
+message remittanceInfo {
+    // 订单号
+    string orderNumber = 0; 
+    // 银行账户名
+    string backAccHolder = 1; 
+    // 汇款省份
+    string province = 2; 
+    // 支行名
+    string bank = 3;
+    // 银行卡账号 
+    string cardNumber = 4;
+    // 金额
+    int32 withdrawalAmount = 5; 
+    // 实际转账金额
+    int32 actualAmount = 6;
+    // 完成时间
+    string completeTime = 7;
+    // 汇款员账号 
+    string operator = 8; 
+    // 订单状态
+    int32 orderStatus = 9; 
+     // 备注
+    string remark = 10;
+}
+
+// 查询与导出请求
+message inquireExportRequest {
+    // 操作员账号
+    string account = 0; 
+    // 开始日期
+    string startDate = 1; 
+    // 结束日期
+    string endDate = 2; 
+    // 订单状态 1 pending 3 completed 4 rejected
+    int32 orderStatus = 3; 
+    // 是否导出 1 export 2 inquire
+    int32 Export = 4;
+    // 当前页下标
+    int32 pageIndex = 5;
+    // 当前页数据量
+    int32 pageSize = 6;
+}
+
+// 查询与导出响应
+message inquireExportReply {
+    //返回码
+    enum Code {
+        Success = 0;
+        Fail = 1;
+        UnExist = 2;
+    }
+    Code result = 0;
+    repeated remittanceInfo remittanceInfo = 1;
+    // 订单总数
+    int32 totalNum = 2;
+    // 当前页下标
+    int32 pageIndex = 3;
+    // 当前页数据量
+    int32 pageSize = 4;
+}
+
+// 操作请求
+message operateRequest {
+    //订单号 
+    string orderNumber = 0;
+    // 操作 1 accept 2 refuse
+    int32 operation = 1;
+    // 操作员
+    string operatorAccount = 2;
+    // 原因
+    string remark = 3;
+}
+
+// 是否有新订单请求
+message existRequest {
+    // 操作员账号
+    string account = 0;
+}
+
+message existReply {
+    enum Code {
+        Success = 0;
+        Fail = 1;
+    }
+    Code result = 0;
+    // exist = 1， not exist = 0
+    int32 exist = 1; 
+}
+
+// 操作响应
+message operateRemitReply {
+    //返回码
+    enum Code {
+        Success = 0;
+        Fail = 1;
+        //用户不存在 //订单不存在
+        UnExist = 2; 
+        //用户被禁
+        Inactive = 3; 
+    }
+    Code result = 0;
+    remittanceInfo remittanceInfo = 1;
+}
+
+
+

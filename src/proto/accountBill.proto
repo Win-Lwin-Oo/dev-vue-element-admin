@@ -1,0 +1,464 @@
+// accountBill.proto
+
+syntax = "proto3";
+package accountBill;
+
+import "game.proto";
+
+//订单记录信息
+message BillInfo {
+    //桌台名称
+    string tableName = 0;
+    //场次ID
+    int32 screenId = 1;
+    //局数ID
+    int32 inningId = 2;
+    //下注时间
+    string betTime = 3;
+    //结算时间
+    string resultTime = 4;
+    //游戏类型
+    GameType gameType = 5;
+    //剩余金额
+    int32 coinE = 6;
+    //押庄金额
+    int32 numZ = 7;
+    //押闲金额
+    int32 numX = 8;
+    //押和金额
+    int32 numH = 9;
+    //押庄对金额
+    int32 numZd = 10;
+    //押闲对金额
+    int32 numXd = 11;
+    //订单结果
+    string result = 12;
+    //押注前金额
+    int32 coinB = 13;
+    //桌台ID
+    int32 tableId = 14;
+    // 订单id
+    string billId = 15;
+    // 下注者帐号
+    string account = 16;
+    // 下注者 名称
+    string userName = 17;
+    // 订单状态
+    int32 state = 18;
+    //错误原因
+    string errInfo = 19;
+    // 订单结算后点数
+    int32 surplusCoin = 20;
+    // 对比次数
+    int32 compare = 21;
+    // 获取次数
+    int32 getNumber = 22;
+    // 订单获取的状态
+    int32 getState = 23;
+    // 倒计时结束时间
+    string countDownEnd = 24;
+    // 订单记录时间
+    string createAt = 25;
+    //总赢
+    int32 winNum = 26;
+    //和局费
+    int32 drawFee = 27;
+    //洗码费
+    int32 washFee = 28;
+    //和局量
+    int32 drawNum = 29;
+    //洗码量
+    int32 washNum = 30;
+    // 下注量
+    int32 billNum = 31;
+    // 账期时间
+    string checkDay = 32;
+    //预付金额
+    string propayCoin = 33;
+    //扩展押注项-大、龙单、闲1平
+    int32 num1 = 34;
+    //扩展押注项-小、龙双、闲1翻
+    int32 num2 = 35;
+    //扩展押注项-任意对子、龙红、闲2平
+    int32 num3 = 36;
+    //扩展押注项-完美对子、龙黑、闲2翻
+    int32 num4 = 37;
+    //扩展押注项-庄龙宝、虎单、闲3平
+    int32 num5 = 38;
+    //扩展押注项-闲龙宝、虎双、闲3翻
+    int32 num6 = 39;
+    //扩展押注项-超级6、虎红
+    int32 num7 = 40;
+    //扩展押注项-虎黑
+    int32 num8 = 41;
+    // 是否是免佣订单 1 非免佣，2 免佣
+    int32 isCommission = 42;
+    // 押注类型 目前骰宝、轮盘用，跟随对应game的betType
+    int32 betType = 43;
+    // 押注金额
+    int32 betNum = 44;
+}
+
+//订单下注总和
+message BillTotal {
+    //庄、虎
+    int32 totalZ = 0;
+    //闲、龙
+    int32 totalX = 1;
+    //和 总和
+    int32 totalH = 2;
+    //庄对 总和
+    int32 totalZd = 3;
+    //闲对 总和
+    int32 totalXd = 4;
+    //总赢 总和
+    int32 totalWinNum = 5;
+    //洗码费 总和
+    int32 totalWashFee = 6;
+    //和局费 总和
+    int32 totalDrawFee = 7;
+    //订单游戏结果
+    string result = 8;
+    // 游戏类型
+    int32 gameType = 9;
+    //扩展押注项-大、龙单、闲1平
+    int32 num1 = 10;
+    //扩展押注项-小、龙双、闲1翻
+    int32 num2 = 11;
+    //扩展押注项-任意对子、龙红、闲2平
+    int32 num3 = 12;
+    //扩展押注项-完美对子、龙黑、闲2翻
+    int32 num4 = 13;
+    //扩展押注项-庄龙宝、虎单、闲3平
+    int32 num5 = 14;
+    //扩展押注项-闲龙宝、虎双、闲3翻
+    int32 num6 = 15;
+    //扩展押注项-超级6、虎红
+    int32 num7 = 16;
+    //扩展押注项-虎黑
+    int32 num8 = 17;
+    // 是否是免佣订单 1 非免佣，2 免佣
+    int32 isCommission = 25;
+    // 大
+    int32 da = 26;
+    // 小
+    int32 xiao = 27;
+    // 单
+    int32 dan = 28;
+    // 双
+    int32 shuang = 29;
+    // 轮盘红
+    int32 red = 30;
+    // 轮盘黑
+    int32 black = 31;
+    // 轮盘直接注
+    int32 zhizhu = 32;
+    // 轮盘分注
+    int32 fenzhu = 33;
+    // 轮盘街注
+    int32 jiezhu = 34;
+    // 轮盘三数
+    int32 sanshu = 35;
+    // 轮盘角注
+    int32 jiaozhu = 36;
+    // 轮盘四数
+    int32 sishu = 37;
+    // 轮盘线注
+    int32 xianzhu = 38;
+    // 轮盘打
+    int32 lunpanda = 39;
+    // 轮盘列
+    int32 lunpanlie = 40;
+    // 骰宝全围
+    int32 quanwei = 41;
+    // 骰宝对子
+    int32 duizi = 42;
+    // 骰宝单点
+    int32 dandian = 43;
+    // 骰宝牌九
+    int32 paijiu = 44;
+    // 骰宝总和
+    int32 zonghe = 45;
+    // 骰宝围骰
+    int32 weitou = 46;
+}
+
+//会员简单信息
+message SimpleMemberInfo {
+    string account = 0; //会员账号
+    string name = 1;    //会员名称
+}
+/*********************  消息体  *********************/
+
+//获取一天订单请求
+message GetBillInfoByDayRequest {
+    // 订单时间
+    required string date = 0;
+    //桌台ID
+    optional int32 tableId = 1;
+    //场次ID
+    optional int32 screenId = 2;
+    //局数ID
+    optional int32 inningId = 3;
+    //会员账号或名称
+    optional string accountOrUserName = 4;
+}
+
+//获取一天订单应答
+message GetBillInfoByDayReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        //用户不存在
+        MemberNotExist = 1;
+        //用户存在，但是在该条件下，订单不存在
+        BillNotExist = 2;
+        //用户存在，但是在该条件下，订单不存在
+        ErrorParams = 3;
+        //未知错误
+        Faild = 4;
+    }
+    Code result = 0;
+    //总桌台数
+    int32 tableCount = 1;
+    //总场数
+    int32 screenCount = 2;
+    //总局数
+    int32 gameCount = 3;
+    //订单数
+    int32 billCount = 4;
+    //会员信息集合
+    repeated SimpleMemberInfo members = 5;
+    //本次对比Id，只有result=0，compareId才有效
+    int32 compareId = 6;
+}
+
+//获取订单请求
+message GetBillInfoRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //场次ID
+    int32 screenId = 1;
+    //局数ID
+    int32 inningId = 2;
+    //获取次数
+    int32 getNumber = 3;
+    //账号
+    string account = 4;
+    // 游戏id
+    string gameId = 5;
+}
+
+//获取订单应答
+message GetBillInfoReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    //获取次数
+    int32 getNumber = 1;
+    //对比结果 0 正确 1 对比错误 2 修改结果 3作废结果
+    int32 compareResult = 2;
+    //下注总和
+    BillTotal info = 3;
+    //桌台ID
+    int32 tableId = 4;
+    //场次ID
+    int32 screenId = 5;
+    //局数ID
+    int32 inningId = 6;
+    // 游戏id
+    string gameId = 7;
+    repeated BillInfo billInfo = 8;
+    // 倒计时结束时间
+    string countDownEnd = 9;
+    //第一次获取的总数据
+    BillTotal oldInfo = 10;
+    // 第一次获取的订单数组
+    repeated BillInfo oldBillInfo = 11;
+    // 是否是自动获取 1 是 2 否
+    int32 auto = 12;
+    //订单结果
+    string gameResult = 13;
+    //订单序号
+    optional int32 completeBillCount = 14;
+    //对比序号
+    int32 compareIndex = 15;
+    // 桌台名称
+    string tableName = 16;
+    // 桌台类型
+    int32 tableType = 17;
+    // 游戏类型 1 百家乐 2 龙虎斗  3 牛牛
+    int32 gameType = 18;
+}
+
+//查询订单请求
+message QueryBillRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //场次ID
+    int32 screenId = 1;
+    //局数ID
+    int32 inningId = 2;
+    //账号or用户名
+    string account = 3;
+    // 当前页下标
+    int32 pageIndex = 4;
+    // 当前页数据量
+    int32 pageSize = 5;
+    // 订单类型 0 错误 1 正确
+    int32 billType = 6;
+    // 对比类型 0 自动对比 1 手动对比
+    int32 compareType = 7;
+    // 开始日期
+    string startDate = 8;
+    // 结束日期
+    string endDate = 9;
+    // 对比次数
+    int32 compareNumber = 10;
+    // gameType
+    int32 gameType = 11;
+}
+
+//查询正确订单应答
+message QueryBillReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    repeated BillInfo info = 1;
+    repeated BillInfo oldInfo = 2;
+    //订单合计
+    BillTotal billTotal = 3;
+}
+
+// 补打小票
+message AddPrintRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //场次ID
+    int32 screenId = 1;
+    //局数ID
+    int32 inningId = 2;
+    //账号or用户名
+    string account = 3;
+    // 订单时间
+    string date = 5;
+}
+
+message AddPrintReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+        PrinterIpError = 2;
+        TableUnbinding = 3;
+    }
+    Code result = 0;
+}
+
+// 查询手动获取的订单
+message QueryReqBillRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //场次ID
+    int32 screenId = 1;
+    //局数ID
+    int32 inningId = 2;
+    //账号or用户名
+    string account = 3;
+    // 当前页下标
+    int32 pageIndex = 4;
+    // 当前页数据量
+    int32 pageSize = 5;
+    // 订单类型 0 错误 1 正确
+    int32 billType = 6;
+    // 开始日期
+    string startDate = 7;
+    // 结束日期
+    string endDate = 8;
+    // 获取次数
+    int32 getNumber = 9;
+}
+
+message QueryReqBillReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    repeated BillInfo info = 1;
+}
+
+// 手动保存订单
+message ReqSaveBillRequest {
+    //桌台ID
+    int32 tableId = 0;
+    //场次ID
+    int32 screenId = 1;
+    //局数ID
+    int32 inningId = 2;
+    //账号or用户名
+    string account = 3;
+    // 当前页下标
+    int32 pageIndex = 4;
+    // 当前页数据量
+    int32 pageSize = 5;
+    // 获取次数
+    int32 getNumber = 9;
+    // 游戏id
+    string gameId = 10;
+}
+
+message ReqSaveBillReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+    }
+    Code result = 0;
+    //获取次数
+    int32 getNumber = 1;
+    //对比结果 0 正确 1 对比错误 2 修改结果 3作废结果
+    int32 compareResult = 2;
+    //下注总和
+    BillTotal info = 3;
+    //桌台ID
+    int32 tableId = 4;
+    //场次ID
+    int32 screenId = 5;
+    //局数ID
+    int32 inningId = 6;
+    // 游戏id
+    string gameId = 7;
+    repeated BillInfo billInfo = 8;
+    // 倒计时结束事件
+    string countDownEnd = 9;
+    // 是否是自动获取 1 是 2 否
+    int32 auto = 10;
+    //订单结果
+    string gameResult = 11;
+}
+
+//请求终止手动对比
+message StopManualCompareRequest {
+    int32 compareId = 0;
+}
+
+//请求终止手动对比
+message StopManualCompareReplay {
+    //返回码
+    enum Code {
+        Success = 0;
+        Faild = 1;
+        //对比已经结束
+        ErrorCompareId = 2;
+    }
+    Code result = 0;
+    int32 compareId = 1;
+}

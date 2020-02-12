@@ -1,0 +1,53 @@
+// game.proto
+
+syntax = "proto3";
+package monitor;
+
+//监控数据信息
+message MonitorInfo{
+    //桌台名称
+    string name = 0;
+    //统计总数
+    int32 count = 1;
+    //数据数组
+    repeated int32 numArr = 2; 
+}
+
+//************************************ 消息体 ******************************
+
+//管理员列表请求
+message AllRequest {
+    //用户账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+}
+message AllReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    //管理员信息
+    repeated MonitorInfo info = 1;
+}
+
+//************************************ 测试消息体 ******************************
+//测试消息
+message TestRequest {
+    //类型
+    int32 type = 0;
+}
+message TestReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}

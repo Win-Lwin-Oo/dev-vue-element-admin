@@ -1,0 +1,66 @@
+// table.proto
+
+syntax = "proto3";
+package ipBlack;
+
+//******************************************* 消息体 *******************************************
+
+//所有ip黑名单请求
+message AllIpBlackRequest {
+	//用户账号
+	string account = 0;
+}
+
+//所有ip黑名单请求
+message AllIpBlackReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+	//ip
+	repeated string ip = 1;
+}
+
+//添加ip黑名单请求
+message AddIpBlackRequest {
+    //用户账号
+	string account = 0;
+    //用户名称
+    string name = 1;
+    //ip
+	string ip = 2;
+}
+//添加ip黑名单请求
+message AddIpBlackReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;    
+}
+
+//删除ip黑名单请求
+message DeleteIpBlackRequest {
+    //用户账号
+	string account = 0;
+     //用户名称
+    string name = 1;
+    //ip
+	string ip = 2;
+}
+//删除ip黑名单请求
+message DeleteIpBlackReplay {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;    
+}
+

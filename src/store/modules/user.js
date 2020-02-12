@@ -1,13 +1,27 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+const proto = require('../../proto/proto.js').nested
 
 const state = {
   token: getToken(),
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  // 定时器拦截
+  interValWaiting: false,
+  // 定时器函数
+  intervalFunc: null,
+  curUserInfo: {
+    account: '',
+    name: '',
+    id: 0,
+    permission: [],
+    watchUsers: []
+  },
+  gameList: [],
+  baiJiaOdds: []
 }
 
 const mutations = {
@@ -25,7 +39,25 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_CURUSER: (state, curUserInfo) => {
+    state.curUserInfo = curUserInfo
+  },
+  SET_GAMELIST: (state, gameList) => {
+    state.gameList = gameList
+  },
+  SET_ODDS: (state, baiJiaOdds) => {
+    state.baiJiaOdds = baiJiaOdds
   }
+  // SET_INTERVAL: (state, interval) => {
+  //   if (state.intervalFunc) clearInterval(state.intervalFunc)
+  //   if (interval) {
+  //     state.intervalFunc = setInterval(() => {
+  //       state.interValWaiting = !state.interValWaiting;
+  //       console.log('定时获取', state.interValWaiting)
+  //     }, 500)
+  //   }
+  // }
 }
 
 const actions = {
@@ -125,6 +157,16 @@ const actions = {
 
       resolve()
     })
+  },
+  // 获取当前用户数据
+  setCurUserInfo({ commit }, userInfo) {
+    commit('SET_CURUSER', userInfo)
+  },
+  setGameList({ commit }, gameList) {
+    commit('SET_GAMELIST', gameList)
+  },
+  setOddsInfo({ commit }, baiJiaOdds) {
+    commit('SET_ODDS', baiJiaOdds)
   }
 }
 

@@ -1,0 +1,332 @@
+// log.proto
+
+syntax = "proto3";
+package log;
+
+enum OptionType {
+    None = 0;
+    State = 1;      //修改状态
+    Password = 2;   //修改密码
+    Limit = 3;      //修改限红
+    Result = 4;     //修改游戏结果
+    Kick = 5;      //踢人
+}
+
+enum ControlType {
+    None = 0; //未知操作类型    
+    ChangePassWord = 1; //修改密码.  
+    DistributionLimit = 2; //修改限红分配 
+    DistributionTable = 3; //桌台分配 
+    ChangeName = 4; //名称修改 
+    ChangeStake = 5; //占成修改 
+    ChangeWashRate = 6; //洗码率修改
+    ChangeDrawRate = 7; //和局率修改 
+    KickUser = 8; //踢人操作 
+    PauseUser = 9; //暂停操作 
+    LockUser = 10; //锁定操作 
+    ClearCoin = 11; //清零操作 
+    ClearCoinAndVoid = 12; //清卡操作 
+    UnEnable = 13; //停用操作 
+    Enable = 14; //启用操作 
+    AddCoin = 15; //上分操作 
+    SubCoin = 16; //下分操作 
+    ChangeResult = 17; //修改结果 
+    VoidResult = 18; //作废结果 
+    CreateUser = 19; //新增用户 
+    CreateNotice = 20; //新增公告 
+    EditNotice = 21; //公告修改 
+    SingleDelete = 22; //单体删除 
+    SingleCreate = 23; //单体创建 
+    GroupDelete = 24; //批量删除 
+    CroupCreate = 25; //批量创建 
+    DistributionTableForPhoneUser = 26; //分配桌台(电投)
+    CreateLimit = 27; //创建限红 
+    EditLimit = 28; //编辑限红 
+    DeleteLog = 29; //日志删除 
+    BlackIP = 30; //黑名单 
+    CreateTable = 31; //桌台创建 
+    EditTable = 32; //桌台修改 
+    SetOdds = 33; //赔率设置 
+    DataSave = 34; //数据归档 
+    CalculateCoinByOneKey = 35; //一键结洗码 
+    EditAgent = 36; //修改代理
+    EditAdmin = 37; //修改管理
+    ChangeWashVisible = 38; //是否可见洗码及和局变更
+    ChangeWashType = 39; //洗码类型修改
+    EditMember = 40; //修改会员
+    ChangeAdminPermission = 41; //修改管理权限
+    CreateSubAccount = 42; // 创建子帐号
+    ChangeSubAccount  = 43; // 修改子帐号
+    CalculateCoinBySelf = 44; //自助结洗码 
+    ChangeInnerGameType = 45; //修改福利方式
+    ChangeInStake = 46; // 修改占股类型
+    DistributionTableForGameUser = 47; //分配桌台(网投)
+    CalculateCoinByBatch = 48; //批量结洗码 
+    WithDrawalsRequestCheck = 49; // 提现申请审核
+    Recharge = 50; // 充值
+    WithDrawals = 51; // 发起提现
+    RechargeConfig = 52; // 配置充值渠道
+    CreateChannel = 53; // 创建渠道
+    CreatePayMethod = 54; // 创建支付方式
+    UpdateChannel = 55; // 更新渠道
+    UpdatePayMethod = 56; // 更新支付方式
+    UpdatePayOrder = 57; // 更新第三方订单 备注
+    SetForbidden = 58; // 设置禁言
+    VoidForbidden = 59; // 取消禁言
+    AllowTableBack = 60; // 允许桌台录入退格
+    RechargeRequestCheck = 61; // 充值申请审核
+    ChangeAgentType = 62; // 批量修改下级用户类型
+    ChangeConfig = 63; // 更改系统配置
+    ChangeWashButtonVisiable = 64; //是否可见洗码按钮变更
+    ChangeUserAgentType = 65; // 修改单人用户类型
+    ResetAgentValidCoin = 66; // 重置代理有效点数
+    ChangeMemberOpenShot = 67; // 修改会员截图上传设置
+    ErrorLogin = 68; // 错误登录 锁定登录
+    ChangePhone = 69;// 修改手机号
+}
+
+message CoinLog {
+    //log ID
+    int32 id = 0;
+    //操作者账号
+    string account = 1;
+    //操作者名称
+    string name = 2;
+    //操作的类型
+    int32 type = 3; // 1: 洗点， 2: 补点
+    //操作金额
+    string coin = 4;
+    //操作者类型
+    int32 userType = 5; // 1: 管理， 2: 代理 3: 会员
+    //对象的账号
+    string targetAccount = 6;
+    //对象的名称
+    string targetName = 7;
+    //对象的类型
+    int32 targetType = 8;   // 1: 会员 2: 代理
+    //操作之前对象的点数
+    string targetCoinB = 9;
+    //操作之后对象的点数
+    string targetCoinE = 10;
+    //对象的上级的账号
+    string parentAccount = 11;
+    //对象的上级的名称
+    string parentName = 12;
+    //操作之前对象的上级的点数
+    string parentCoinB = 13;
+    //操作之后对象的上级的点数
+    string parentCoinE = 14;
+    // 操作时间
+    string updatedAt = 15;
+    // 操作类型
+    string logStr = 16;
+}
+
+
+message LoginLog {
+    //用户账号
+    string account = 0;
+    //用户名称
+    string name = 1;
+    //用户类型
+    int32 type = 2; // 1-会员，2-代理 3-管理员 4-监台管理员
+    //用户IP
+    string ip = 3;
+    //用户地址
+    string address = 4;
+    //登录时间
+    string createdAt = 5;
+    // 登录时间
+    string loginTime = 6;
+}
+
+message ControlLog {
+    //操作者账号
+    string account = 0;
+    //操作者名称
+    string name = 1;
+    //目标用户帐号
+    string targetAccount = 2;
+    //目标用户名称
+    string targetName = 3;
+    //操作者类型 1 管理 2 代理 3 会员
+    int32 userType = 4;
+    //目标类型 1 会员 2 代理 3 管理
+    int32 targetUserType = 5;
+    // 操作类型
+    int32 type =  6;
+    // 操作备注
+    string remarks = 7;
+    // 操作时间
+    string operateTime = 8;
+    // 上级账号
+    string parent = 9;
+    // 上级名称
+    string parentName = 10;
+}
+
+message TableChangeLog {
+    //用户账号
+    string account = 0;
+    //用户名称
+    string name = 1;
+    //桌台名称
+    string tableName = 2;
+    //操作时间
+    string createdAt = 3;
+}
+
+//************************************ 消息体 ******************************
+//洗补点日志
+message CoinLogRequest {
+    //账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+    //用户的上级的账号
+    string parentAccount = 3;
+    // 当前页下标
+    int32 pageIndex = 4;
+    // 当前页数据量
+    int32 pageSize = 5;
+    // 是否查询作为被操作者的日志 0 否 1 是
+    int32 needAll = 6;
+    // 是否只查询结洗码 0 全部 1 只查询结洗码 2 查询结洗码之外
+    int32 justWash = 7;
+    // 当前排序条件
+    string sortKey = 8;
+    // 升序降序 1 升序 2 降序
+    int32 sortType = 9;
+    // 搜索关键字
+    string theKey = 10;
+    // 搜索对象 0 全部 1 上级 2 操作者
+    int32 searchTarget = 11;
+    //操作者类型 类型：0-全部 1-管理，2-代理， 3—会员
+    int32 userType = 12;
+    //操作对象类型 类型：0-全部 1-会员，2-代理
+    int32 targetType = 13;
+    // 是否查询下级日志 1 查询下级 0 不查询下级
+    int32 withChild = 14;
+}
+message CoinLogReply {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    repeated CoinLog info = 1;
+    // 数据总条数
+    int32 count = 2;
+}
+
+//登录日志
+message LoginLogRequest {
+    //账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+    // 当前页下标
+    int32 pageIndex = 3;
+    // 当前页数据量
+    int32 pageSize = 4;
+    // 当前排序条件
+    string sortKey = 5;
+    // 升序降序 1 升序 2 降序
+    int32 sortType = 6;
+    // 搜索关键字
+    string theKey = 7;
+    // 用户类型 0-全部  1-会员，2-代理 3-管理员 4-监台管理员
+    int32 type = 8;
+}
+message LoginLogReply {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    repeated LoginLog info = 1;
+    // 数据总条数
+    int32 count = 2;
+}
+//操作日志
+message ControlLogRequest {
+    //账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+    // 当前页下标
+    int32 pageIndex = 3;
+    // 当前页数据量
+    int32 pageSize = 4;
+    // 当前排序条件
+    string sortKey = 5;
+    // 升序降序 1 升序 2 降序
+    int32 sortType = 6;
+    // 搜索关键字
+    string theKey = 7;
+    // 操作类型 0 全部
+    int32 type = 8;
+}
+message ControlLogReply {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    repeated ControlLog info = 1;
+    // 数据总条数
+    int32 count = 2;
+}
+
+//桌台切换日志
+message TableChangeLogRequest {
+    //账号
+    string account = 0;
+    //开始日期
+    string startDate = 1;
+    //结束日期
+    string endDate = 2;
+}
+message TableChangeLogReply {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+    repeated TableChangeLog info = 1;
+}
+
+//清除日志
+message ClearLogRequest {
+    //操作者账户
+    string account = 0;
+    //操作者密码
+    string password = 1;
+     //操作者名称
+    string name = 2;
+    //结束日期
+    string endDate = 3;
+}
+message ClearLogReply {
+    //返回码
+    enum Code {
+        Success = 0;    //成功
+        Failed = 1;     //失败
+    }
+    //结果
+    Code result = 0;
+}
