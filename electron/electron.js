@@ -2,7 +2,7 @@
  * Created by jykj on 2019/5/30.
  */
 const {app, BrowserWindow, Menu} = require('electron')
-import { client } from 'electron-connect';
+import {client} from 'electron-connect';
 import * as path from 'path';
 const appName = app.getName();
 
