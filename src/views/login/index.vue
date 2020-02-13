@@ -115,8 +115,6 @@ export default {
   watch: {
     $route: {
       handler: function(route) {
-        console.log('登录页 路由监听')
-        store.dispatch('user/logout')
         const query = route.query
         if (query) {
           this.redirect = query.redirect
