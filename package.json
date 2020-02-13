@@ -17,6 +17,7 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
     "new": "plop",
     "proto": "npx pbjs -t json src/proto/*.proto > src/proto/proto.json && pbjs -t json-module -w commonjs -o src/proto/proto.js src/proto/*.proto",
+    "electron_dev": "npm run build && electron electron.js",
     "electron_mv": "cd electron && cp -i package.json ../dist && cp -i electron.js ../dist",
     "electron_build_dev": "electron-packager ./dist/ 99admin --platform=win32 --arch=ia32 --icon=./dist/favicon.ico --overwrite",
     "el_windows_dev:w2": "npm run build && npm run electron_mv && npm run electron_build_dev"
