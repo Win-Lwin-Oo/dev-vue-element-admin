@@ -2,7 +2,7 @@
  * Created by jykj on 2019/5/30.
  */
 const {app, BrowserWindow, Menu} = require('electron')
-const {client} = require('electron-connect');
+const client = require('electron-connect').client;
 const appName = app.getName();
 
 const debugMode = false;
