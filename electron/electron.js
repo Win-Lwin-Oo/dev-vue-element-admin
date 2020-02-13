@@ -1,14 +1,14 @@
 /**
  * Created by jykj on 2019/5/30.
  */
-const {app, BrowserWindow, Menu} = require('electron')
-const client = require('electron-connect').client;
+const {app, BrowserWindow, Menu, ipcMain} = require('electron')
+// const client = require('electron-connect').client;
 const appName = app.getName();
 
 const debugMode = false;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow = null
 
 function createWindow () {
     // Create the browser window.
@@ -32,7 +32,7 @@ function createWindow () {
       fullscreenable: true,
       icon: './resources/app/assets/icon/icon-cms.jpg',
       webPreferences: {
-        nodeIntegration: false
+        nodeIntegration: true
       }
     })
     // and load the index.html of the app.
@@ -60,7 +60,7 @@ function createWindow () {
 
   initMainListener();
 
-  client.create(mainWindow);
+  // client.create(mainWindow);
 }
 function initMainListener() {
   ipcMain.on('ELECTRON_BRIDGE_HOST', (event, msg) => {
@@ -83,7 +83,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (applicationRef === null) {
+  if (mainWindow === null) {
     createWindow();
   }
 });
