@@ -2,7 +2,7 @@
  * Created by jykj on 2019/5/30.
  */
 const {app, BrowserWindow, Menu, ipcMain} = require('electron')
-const client = require('electron-connect').client;
+// const client = require('electron-connect').client;
 const appName = app.getName();
 
 const debugMode = true;
@@ -60,7 +60,7 @@ function createWindow () {
 
   initMainListener();
 
-  client.create(mainWindow);
+  // client.create(mainWindow);
 }
 function initMainListener() {
   ipcMain.on('ELECTRON_BRIDGE_HOST', (event, msg) => {
