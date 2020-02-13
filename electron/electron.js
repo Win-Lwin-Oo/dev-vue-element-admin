@@ -32,7 +32,7 @@ function createWindow () {
       fullscreenable: true,
       icon: './resources/app/assets/icon/icon-cms.jpg',
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: false
       }
     })
     // and load the index.html of the app.
